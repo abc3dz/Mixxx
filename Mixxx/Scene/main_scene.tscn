@@ -1,7 +1,9 @@
 [gd_scene format=3 uid="uid://b4m06iafk8t4v"]
 
 [ext_resource type="Shader" uid="uid://c8y8j47m8ua2a" path="res://Shader/floor_main_scene.gdshader" id="1_31fxm"]
+[ext_resource type="PackedScene" uid="uid://c384l804wfmhh" path="res://Scene/godot_toon_mixamo.tscn" id="1_g51t8"]
 [ext_resource type="PackedScene" uid="uid://08f70ney62v1" path="res://Scene/player.tscn" id="1_j4qrl"]
+[ext_resource type="PackedScene" uid="uid://dkoq24vr4ex08" path="res://Scene/godot_rust_mixamo.tscn" id="2_j1xvy"]
 [ext_resource type="PackedScene" uid="uid://cauaa7qbkg80t" path="res://Scene/godot_toon.tscn" id="3_06yma"]
 [ext_resource type="PackedScene" uid="uid://dt0m7ugg6xhx" path="res://Scene/crab_rust_toon.tscn" id="4_4kvl3"]
 [ext_resource type="PackedScene" uid="uid://dqq0mmaukjiw5" path="res://Scene/base_mesh.tscn" id="5_lttqn"]
@@ -32,11 +34,29 @@ shader_parameter/color1 = Color(0.25, 0.25, 0.25, 1)
 shader_parameter/color2 = Color(0.35, 0.35, 0.35, 1)
 shader_parameter/tile_size = 72.0
 
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_i64o6"]
+emission_shape = 1
+emission_sphere_radius = 1.0
+gravity = Vector3(0, 5, 0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0xtjt"]
+diffuse_mode = 3
+specular_mode = 1
+albedo_color = Color(0.34901962, 0.30588236, 0.8980392, 1)
+metallic_specular = 0.12
+roughness = 0.12
+
+[sub_resource type="QuadMesh" id="QuadMesh_g51t8"]
+material = SubResource("StandardMaterial3D_0xtjt")
+size = Vector2(0.1, 0.3)
+
 [node name="MainScene" type="MainScene" unique_id=1404167172 node_paths=PackedStringArray("base_mesh", "godot_toon", "rust_toon", "how2")]
 base_mesh = NodePath("BaseMesh")
 godot_toon = NodePath("GodotToon")
 rust_toon = NodePath("RustToon")
 how2 = NodePath("Label")
+scene_gdt = ExtResource("1_g51t8")
+scene_gdr = ExtResource("2_j1xvy")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1866369971]
 environment = SubResource("Environment_4kvl3")
@@ -61,8 +81,11 @@ surface_material_override/0 = SubResource("ShaderMaterial_06yma")
 
 [node name="Player" parent="." unique_id=2068331013 groups=["player"] instance=ExtResource("1_j4qrl")]
 
-[node name="Skeleton3D" parent="Player/Nhook_NewUniform/metarig" parent_id_path=PackedInt32Array(2068331013, 1911823935, 168371168) index="0" unique_id=616147699]
-bones/3/scale = Vector3(1.0497342, 1.0497342, 1.0497342)
+[node name="Skeleton3D" parent="Player/Nhook_NewUniform/metarig" parent_id_path=PackedInt32Array(2068331013, 1911823935, 965695038) index="0" unique_id=33401000]
+bones/3/scale = Vector3(1.0069884, 1.0069884, 1.0069884)
+bones/8/scale = Vector3(0.99999994, 1.0000001, 1)
+bones/31/scale = Vector3(0.99999994, 0.9999999, 1)
+bones/58/scale = Vector3(0.99999976, 0.9999998, 0.9999999)
 
 [node name="RustToon" parent="." unique_id=1441850480 groups=["crab_rust_toon"] instance=ExtResource("4_4kvl3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0.5, 0)
@@ -74,7 +97,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 1, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -4)
 
 [node name="PodiumMix" parent="." unique_id=1686565406 instance=ExtResource("6_i64o6")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 0)
 
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1034350745]
 offset_right = 40.0
@@ -106,6 +128,12 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 50
 autowrap_mode = 2
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="." unique_id=552252825]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05388534, 0, 0.0049511194)
+speed_scale = 2.0
+process_material = SubResource("ParticleProcessMaterial_i64o6")
+draw_pass_1 = SubResource("QuadMesh_g51t8")
 
 [connection signal="body_entered" from="RustToon" to="." method="on_rust_toon_body_entered"]
 [connection signal="body_entered" from="GodotToon" to="." method="on_godot_toon_body_entered"]
