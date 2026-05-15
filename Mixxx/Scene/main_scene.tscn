@@ -1,0 +1,123 @@
+[gd_scene format=3 uid="uid://b4m06iafk8t4v"]
+
+[ext_resource type="Shader" uid="uid://c8y8j47m8ua2a" path="res://Shader/floor_main_scene.gdshader" id="1_31fxm"]
+[ext_resource type="PackedScene" uid="uid://08f70ney62v1" path="res://Scene/player.tscn" id="1_j4qrl"]
+[ext_resource type="PackedScene" uid="uid://cauaa7qbkg80t" path="res://Scene/godot_toon.tscn" id="3_06yma"]
+[ext_resource type="PackedScene" uid="uid://dt0m7ugg6xhx" path="res://Scene/crab_rust_toon.tscn" id="4_4kvl3"]
+[ext_resource type="PackedScene" uid="uid://dqq0mmaukjiw5" path="res://Scene/base_mesh.tscn" id="5_lttqn"]
+[ext_resource type="PackedScene" uid="uid://b7vcun4ugftd4" path="res://Scene/podium_mix.tscn" id="6_i64o6"]
+[ext_resource type="Texture2D" uid="uid://b54uvwa5sqium" path="res://Imgs/BaseMesh100ds.webp" id="6_k2rys"]
+[ext_resource type="Texture2D" uid="uid://b1manmbokqlf3" path="res://Imgs/GodotToon100ds.webp" id="7_i64o6"]
+[ext_resource type="Texture2D" uid="uid://cwxnh0c0niqj2" path="res://Imgs/RustToon100ds.webp" id="8_0xtjt"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_31fxm"]
+
+[sub_resource type="Sky" id="Sky_06yma"]
+sky_material = SubResource("ProceduralSkyMaterial_31fxm")
+
+[sub_resource type="Environment" id="Environment_4kvl3"]
+background_mode = 2
+sky = SubResource("Sky_06yma")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lwscp"]
+size = Vector3(100, 1, 100)
+
+[sub_resource type="BoxMesh" id="BoxMesh_j4qrl"]
+size = Vector3(100, 1, 100)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_06yma"]
+render_priority = 0
+shader = ExtResource("1_31fxm")
+shader_parameter/color1 = Color(0.25, 0.25, 0.25, 1)
+shader_parameter/color2 = Color(0.35, 0.35, 0.35, 1)
+shader_parameter/tile_size = 72.0
+
+[node name="MainScene" type="MainScene" unique_id=1404167172 node_paths=PackedStringArray("base_mesh", "godot_toon", "rust_toon", "how2")]
+base_mesh = NodePath("BaseMesh")
+godot_toon = NodePath("GodotToon")
+rust_toon = NodePath("RustToon")
+how2 = NodePath("Label")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1866369971]
+environment = SubResource("Environment_4kvl3")
+
+[node name="Camera3D" type="CameraFollow" parent="." unique_id=1249015587]
+target_path = NodePath("../Player")
+transform = Transform3D(1, 0, 0, 0, 0.9242864, 0.38169962, 0, -0.38169962, 0.9242864, 0, 2.45656, 4.2118225)
+current = true
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1556507222]
+transform = Transform3D(1, 0, 0, 0, 0.8006896, 0.5990795, 0, -0.5990795, 0.8006896, 0, 8.862741, 0)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=956702887]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=1019524448]
+shape = SubResource("BoxShape3D_lwscp")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D" unique_id=1263976195]
+mesh = SubResource("BoxMesh_j4qrl")
+surface_material_override/0 = SubResource("ShaderMaterial_06yma")
+
+[node name="Player" parent="." unique_id=2068331013 groups=["player"] instance=ExtResource("1_j4qrl")]
+
+[node name="Skeleton3D" parent="Player/Nhook_NewUniform/metarig" parent_id_path=PackedInt32Array(2068331013, 1911823935, 168371168) index="0" unique_id=616147699]
+bones/3/scale = Vector3(1.0497342, 1.0497342, 1.0497342)
+
+[node name="RustToon" parent="." unique_id=1441850480 groups=["crab_rust_toon"] instance=ExtResource("4_4kvl3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0.5, 0)
+
+[node name="GodotToon" parent="." unique_id=2122828118 groups=["godot_toon"] instance=ExtResource("3_06yma")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 1, 0)
+
+[node name="BaseMesh" parent="." unique_id=465993362 groups=["base_mesh"] instance=ExtResource("5_lttqn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -4)
+
+[node name="PodiumMix" parent="." unique_id=1686565406 instance=ExtResource("6_i64o6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 0)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1034350745]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="BaseMeshTR" type="TextureRect" parent="HBoxContainer" unique_id=1265404460]
+layout_mode = 2
+texture = ExtResource("6_k2rys")
+
+[node name="GodotToonTR" type="TextureRect" parent="HBoxContainer" unique_id=963441408]
+layout_mode = 2
+texture = ExtResource("7_i64o6")
+
+[node name="RustToonTR" type="TextureRect" parent="HBoxContainer" unique_id=1592526833]
+layout_mode = 2
+texture = ExtResource("8_0xtjt")
+
+[node name="Label" type="Label" parent="." unique_id=238994392]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -270.5
+offset_top = -142.5
+offset_right = 270.5
+offset_bottom = 142.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 50
+autowrap_mode = 2
+
+[connection signal="body_entered" from="RustToon" to="." method="on_rust_toon_body_entered"]
+[connection signal="body_entered" from="GodotToon" to="." method="on_godot_toon_body_entered"]
+[connection signal="body_entered" from="BaseMesh" to="." method="on_base_mesh_body_entered"]
+[connection signal="body_entered" from="PodiumMix" to="." method="on_podium2mix_body_entered"]
+[connection signal="body_exited" from="PodiumMix" to="." method="on_podium2mix_body_exited"]
+
+[editable path="Player"]
+[editable path="Player/Nhook_NewUniform"]
+[editable path="RustToon"]
+[editable path="RustToon/RustToon"]
+[editable path="GodotToon"]
+[editable path="GodotToon/GodotToon2"]
+[editable path="BaseMesh"]
+[editable path="BaseMesh/BaseBody"]

@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://dqq0mmaukjiw5"]
+
+[ext_resource type="PackedScene" uid="uid://bipimm0xbqnri" path="res://Models/BaseBody.glb" id="1_w3rwm"]
+[ext_resource type="Texture2D" uid="uid://ciuiqxw121g42" path="res://Models/Textures/TT_Color-min.png" id="2_f5m3n"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_w3rwm"]
+height = 1.699707
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f5m3n"]
+albedo_texture = ExtResource("2_f5m3n")
+
+[node name="BaseMesh" type="FloatingItem" unique_id=465993362]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1978558497]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0025024414, 0.8442544, 0)
+shape = SubResource("CapsuleShape3D_w3rwm")
+
+[node name="BaseBody" parent="." unique_id=296786796 instance=ExtResource("1_w3rwm")]
+
+[node name="BaseMesh" parent="BaseBody" index="0" unique_id=304159245]
+surface_material_override/0 = SubResource("StandardMaterial3D_f5m3n")
+
+[connection signal="body_entered" from="." to="." method="on_body_entered"]
+
+[editable path="BaseBody"]

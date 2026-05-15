@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://dt0m7ugg6xhx"]
+
+[ext_resource type="PackedScene" uid="uid://dll0r6kpa0uy0" path="res://Models/RustToon.glb" id="1_165al"]
+[ext_resource type="Texture2D" uid="uid://ciuiqxw121g42" path="res://Models/Textures/TT_Color-min.png" id="2_t1x5e"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lna13"]
+size = Vector3(1.1434326, 0.5004883, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_165al"]
+albedo_texture = ExtResource("2_t1x5e")
+
+[node name="CrabRustToon" type="FloatingItem" unique_id=465993362]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1978558497]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0025024414, 0.24841404, 0)
+shape = SubResource("BoxShape3D_lna13")
+
+[node name="RustToon" parent="." unique_id=1733675662 instance=ExtResource("1_165al")]
+
+[node name="Rust_Toon" parent="RustToon" index="0" unique_id=391964137]
+surface_material_override/0 = SubResource("StandardMaterial3D_165al")
+
+[connection signal="body_entered" from="." to="." method="on_body_entered"]
+
+[editable path="RustToon"]
