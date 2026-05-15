@@ -1,6 +1,6 @@
 use crate::scene_gdr;
 use crate::scene_gdt;
-
+    
 use godot::classes::{Area3D, INode3D, Label, Node3D, Texture2D, TextureRect};
 use godot::prelude::*;
 
@@ -69,15 +69,14 @@ impl MainScene {
             
             let mut sc_gdr = self.scene_gdr.instantiate_as::<scene_gdr::SceneGDR>();
             sc_gdr.set_position(Vector3 { x: 1.0, y: 0.0, z: 0.0 });
-            if !sc_gdr.is_inside_tree() {
-                self.base_mut().add_child(&sc_gdr);
-            }
+            self.base_mut().add_child(&sc_gdr);
 
             let mut sc_gdt = self.scene_gdt.instantiate_as::<scene_gdt::SceneGDT>();
             sc_gdt.set_position(Vector3 { x: -1.0, y: 0.0, z: 0.0 });
             self.base_mut().add_child(&sc_gdt);
-            
-            
+
+            self.base().get_tree().set_pause(true);
+        
         }
         if body.is_in_group("player") && self.collected < 3 {
             self.how2.set_text("You need to collect 3 items before entering the podium mix area!");
