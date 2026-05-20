@@ -530,6 +530,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_iemjx")
 libraries/ = SubResource("AnimationLibrary_dkcpu")
 
 [node name="PodiumMix" parent="." unique_id=435913317 instance=ExtResource("3_iemjx")]
+visible = false
 
 [node name="GdtParticles3D" type="GPUParticles3D" parent="." unique_id=1216392268]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05388534, 0, 0.0049511194)

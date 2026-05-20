@@ -1,0 +1,82 @@
+[gd_scene format=3 uid="uid://khitg8mmhvfa"]
+
+[ext_resource type="PackedScene" uid="uid://212v8c5h08ph" path="res://Models/RoomBlank.glb" id="1_jf4yc"]
+[ext_resource type="Shader" uid="uid://c8y8j47m8ua2a" path="res://Shader/floor_main_scene.gdshader" id="2_3vck0"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_dd6xq"]
+size = Vector3(10, 2.8, 0.3)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3vck0"]
+render_priority = 0
+shader = ExtResource("2_3vck0")
+shader_parameter/color1 = Color(0.70975083, 0.7845677, 0.9822071, 1)
+shader_parameter/color2 = Color(0.4366271, 0.57487106, 0.9063318, 1)
+shader_parameter/tile_size = 20.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_cw2ci"]
+size = Vector3(2, 2.9, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dd6xq"]
+size = Vector3(2, 1.5, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_imgdq"]
+size = Vector3(8, 2.8, 0.3)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dtuip"]
+render_priority = 0
+shader = ExtResource("2_3vck0")
+shader_parameter/color1 = Color(0.46303928, 0.5850471, 0.96968454, 1)
+shader_parameter/color2 = Color(0.16518876, 0.2911416, 0.80878705, 1)
+shader_parameter/tile_size = 88.0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3vck0"]
+size = Vector3(0.3, 2.8, 10)
+
+[node name="WallDoorHold" type="WallDoorHold" unique_id=2081128136 node_paths=PackedStringArray("door_open", "static_door")]
+door_open = NodePath("Wall/DoorHold")
+static_door = NodePath("Wall/DoorHold/StaticBody3D")
+
+[node name="Wall" type="CSGMesh3D" parent="." unique_id=1206016780]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 0)
+mesh = SubResource("BoxMesh_dd6xq")
+material = SubResource("ShaderMaterial_3vck0")
+
+[node name="DoorHold" type="CSGMesh3D" parent="Wall" unique_id=1253696390]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 0)
+operation = 2
+mesh = SubResource("BoxMesh_cw2ci")
+
+[node name="Area3D" type="Area3D" parent="Wall/DoorHold" unique_id=1143340706]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall/DoorHold/Area3D" unique_id=1247669993]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.65230274, 0)
+shape = SubResource("BoxShape3D_dd6xq")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Wall/DoorHold" unique_id=814473229]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall/DoorHold/StaticBody3D" unique_id=224614418]
+shape = SubResource("BoxShape3D_imgdq")
+
+[node name="RoomBlank" parent="." unique_id=2128109263 instance=ExtResource("1_jf4yc")]
+
+[node name="WallLRB" parent="RoomBlank" index="0" unique_id=1038169870]
+surface_material_override/0 = SubResource("ShaderMaterial_dtuip")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="RoomBlank" unique_id=808025781]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.855865, 1.4, -5)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RoomBlank/StaticBody3D" unique_id=1402361290]
+shape = SubResource("BoxShape3D_3vck0")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="RoomBlank/StaticBody3D" unique_id=613971468]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.70796, 0, 0)
+shape = SubResource("BoxShape3D_3vck0")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="RoomBlank/StaticBody3D" unique_id=1919405330]
+transform = Transform3D(-4.3711385e-08, 0, 0.99999994, 0, 1, 0, -0.99999994, 0, -4.3711385e-08, -4.875437, 0, -4.8323107)
+shape = SubResource("BoxShape3D_3vck0")
+
+[connection signal="body_entered" from="Wall/DoorHold/Area3D" to="." method="body_entered"]
+
+[editable path="RoomBlank"]
