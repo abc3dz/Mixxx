@@ -7,7 +7,7 @@ pub struct Player {
     #[init(val = 5.0)]
     speed: f32,
 
-    #[init(val = 7.0)]
+    #[init(val = 6.0)]
     jump_impulse: f32,
 
     #[init(val = 9.8)]

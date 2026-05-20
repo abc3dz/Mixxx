@@ -12,3 +12,4 @@ mod floating;
 mod podium2mix;
 mod scene_gdr;
 mod scene_gdt;
+mod wall_door_hold;

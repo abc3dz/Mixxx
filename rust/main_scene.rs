@@ -1,7 +1,7 @@
 use crate::scene_gdr;
 use crate::scene_gdt;
 
-use godot::classes::{CharacterBody3D, Area3D, INode3D, Label, Node3D, Texture2D, TextureRect};
+use godot::classes::{CharacterBody3D, Area3D, INode3D, Label, Node3D, Texture2D, TextureRect, AnimationTree, Timer};
 use godot::prelude::*;
 
 #[derive(GodotClass)]
@@ -29,6 +29,10 @@ pub struct MainScene {
     scene_gdt: OnEditor<Gd<PackedScene>>,
     #[export]
     scene_gdr: OnEditor<Gd<PackedScene>>,
+    #[export]
+    wall_door_hold: OnEditor<Gd<Node3D>>,
+    #[export]
+    timer_yeah: OnEditor<Gd<Timer>>,
     base: Base<Node3D>,
 }
 
@@ -54,6 +58,13 @@ impl MainScene {
             let texture = load::<Texture2D>("res://Imgs/GodotToon100.webp");
             self.godot_toon_tr.set_texture(&texture);
             self.collected += 1;
+            let mut player_anim_tree = self.player.get_node_as::<AnimationTree>("AnimationTree");
+            player_anim_tree.set(
+                "parameters/yeah_blend/blend_amount",
+                &Variant::from(5.0_f32),
+            );
+            self.wall_door_hold.queue_free();
+            self.timer_yeah.start();
         }
     }
     #[func]
@@ -89,5 +100,13 @@ impl MainScene {
             self.how2.set_text("");
         }
         
+    }
+    #[func]
+    fn on_timer_timeout(&mut self) {
+        let mut player_anim_tree = self.player.get_node_as::<AnimationTree>("AnimationTree");
+        player_anim_tree.set(
+            "parameters/yeah_blend/blend_amount",
+            &Variant::from(0.0_f32),
+        );
     }
 }
