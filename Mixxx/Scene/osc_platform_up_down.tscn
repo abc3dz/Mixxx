@@ -1,0 +1,44 @@
+[gd_scene format=3 uid="uid://dg34hb0fab3pu"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_egmqy"]
+size = Vector3(3, 2.4, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_egmqy"]
+albedo_color = Color(0.44297108, 0.7604822, 0.89420825, 0.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_p7ult"]
+size = Vector3(3, 2.4, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_egmqy"]
+size = Vector3(3, 1, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xa5sh"]
+size = Vector3(2, 1, 1)
+
+[node name="PlatformUpDown" type="PlatformUpDown" unique_id=166930633 node_paths=PackedStringArray("platform")]
+platform = NodePath("MeshInstance3D")
+moving_up = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=901053178]
+mesh = SubResource("BoxMesh_egmqy")
+surface_material_override/0 = SubResource("StandardMaterial3D_egmqy")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D" unique_id=253001573]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D" unique_id=1629552679]
+shape = SubResource("BoxShape3D_p7ult")
+
+[node name="AreaUp" type="Area3D" parent="." unique_id=901722869]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AreaUp" unique_id=1741752110]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 1)
+shape = SubResource("BoxShape3D_egmqy")
+
+[node name="AreaDown" type="Area3D" parent="." unique_id=74911075]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AreaDown" unique_id=1721488224]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 1.25, 1)
+shape = SubResource("BoxShape3D_xa5sh")
+
+[connection signal="body_entered" from="AreaUp" to="." method="on_up_body_entered"]
+[connection signal="body_entered" from="AreaDown" to="." method="on_down_body_entered"]

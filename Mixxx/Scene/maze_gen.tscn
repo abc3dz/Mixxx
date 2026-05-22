@@ -16,7 +16,7 @@ data = PackedVector3Array(-19.286499, 0, 18.804499, -19.294199, 0.0033, 18.79679
 [node name="MazeGen" type="Node3D" unique_id=245170755]
 
 [node name="MazeGenAddons" parent="." unique_id=218031010 instance=ExtResource("1_4wlev")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -19.428078)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20)
 
 [node name="Maze" parent="MazeGenAddons" index="0" unique_id=1288224261]
 surface_material_override/0 = SubResource("ShaderMaterial_s1bng")

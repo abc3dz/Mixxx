@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://chvd4w6burwgq"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_momod"]
+size = Vector3(2, 2.4, 0.3)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_momod"]
+data = PackedVector3Array(-1, 1.1999999, 0.14999999, 1, 1.1999999, 0.14999999, -1, -1.1999999, 0.14999999, 1, 1.1999999, 0.14999999, 1, -1.1999999, 0.14999999, -1, -1.1999999, 0.14999999, 1, 1.1999999, -0.14999999, -1, 1.1999999, -0.14999999, 1, -1.1999999, -0.14999999, -1, 1.1999999, -0.14999999, -1, -1.1999999, -0.14999999, 1, -1.1999999, -0.14999999, 1, 1.1999999, 0.14999999, 1, 1.1999999, -0.14999999, 1, -1.1999999, 0.14999999, 1, 1.1999999, -0.14999999, 1, -1.1999999, -0.14999999, 1, -1.1999999, 0.14999999, -1, 1.1999999, -0.14999999, -1, 1.1999999, 0.14999999, -1, -1.1999999, -0.14999999, -1, 1.1999999, 0.14999999, -1, -1.1999999, 0.14999999, -1, -1.1999999, -0.14999999, 1, 1.1999999, 0.14999999, -1, 1.1999999, 0.14999999, 1, 1.1999999, -0.14999999, -1, 1.1999999, 0.14999999, -1, 1.1999999, -0.14999999, 1, 1.1999999, -0.14999999, -1, -1.1999999, 0.14999999, 1, -1.1999999, 0.14999999, -1, -1.1999999, -0.14999999, 1, -1.1999999, 0.14999999, 1, -1.1999999, -0.14999999, -1, -1.1999999, -0.14999999)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_momod"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xd5ml"]
+
+[node name="Platform_Left_Right" type="PlatformLeftRight" unique_id=1992298782 node_paths=PackedStringArray("platform")]
+platform = NodePath("MeshInstance3D")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=176553407]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+mesh = SubResource("BoxMesh_momod")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D" unique_id=524128129]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D" unique_id=1270209721]
+shape = SubResource("ConcavePolygonShape3D_momod")
+
+[node name="LeftArea" type="Area3D" parent="." unique_id=1430933419]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LeftArea" unique_id=256959172]
+shape = SubResource("BoxShape3D_momod")
+
+[node name="RightArea" type="Area3D" parent="." unique_id=1185647838]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RightArea" unique_id=253094972]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, 0)
+shape = SubResource("BoxShape3D_xd5ml")
+
+[connection signal="body_entered" from="LeftArea" to="." method="on_left_body_entered"]
+[connection signal="body_entered" from="RightArea" to="." method="on_right_body_entered"]

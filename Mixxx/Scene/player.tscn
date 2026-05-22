@@ -2746,7 +2746,7 @@ shape = SubResource("CapsuleShape3D_sqjsi")
 [node name="Skeleton3D" parent="Nhook_NewUniform/metarig" parent_id_path=PackedInt32Array(1911823935, 965695038) index="0" unique_id=33401000]
 bones/1/rotation = Quaternion(-0.24749821, 8.708635e-15, -5.900817e-08, 0.9688884)
 bones/3/rotation = Quaternion(-0.0022774157, -1.07553686e-14, -5.4297844e-10, 0.99999744)
-bones/3/scale = Vector3(1.0805486, 1.0805486, 1.0805486)
+bones/3/scale = Vector3(1.0059937, 1.0059937, 1.0059937)
 bones/4/scale = Vector3(1, 1.0000001, 0.9999999)
 bones/5/rotation = Quaternion(-0.050838437, 1.19055215e-07, -1.8181234e-08, 0.99870694)
 bones/5/scale = Vector3(1, 1.0000001, 0.9999997)

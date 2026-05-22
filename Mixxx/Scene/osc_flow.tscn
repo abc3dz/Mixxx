@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://cpbjmwc32ts60"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_cnpy8"]
+size = Vector3(1, 2.4, 3)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1w5eo"]
+albedo_color = Color(0.16737092, 0.64229673, 0.9999998, 1)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_cnpy8"]
+data = PackedVector3Array(-0.5, 1.1999999, 1.5, 0.5, 1.1999999, 1.5, -0.5, -1.1999999, 1.5, 0.5, 1.1999999, 1.5, 0.5, -1.1999999, 1.5, -0.5, -1.1999999, 1.5, 0.5, 1.1999999, -1.5, -0.5, 1.1999999, -1.5, 0.5, -1.1999999, -1.5, -0.5, 1.1999999, -1.5, -0.5, -1.1999999, -1.5, 0.5, -1.1999999, -1.5, 0.5, 1.1999999, 1.5, 0.5, 1.1999999, -1.5, 0.5, -1.1999999, 1.5, 0.5, 1.1999999, -1.5, 0.5, -1.1999999, -1.5, 0.5, -1.1999999, 1.5, -0.5, 1.1999999, -1.5, -0.5, 1.1999999, 1.5, -0.5, -1.1999999, -1.5, -0.5, 1.1999999, 1.5, -0.5, -1.1999999, 1.5, -0.5, -1.1999999, -1.5, 0.5, 1.1999999, 1.5, -0.5, 1.1999999, 1.5, 0.5, 1.1999999, -1.5, -0.5, 1.1999999, 1.5, -0.5, 1.1999999, -1.5, 0.5, 1.1999999, -1.5, -0.5, -1.1999999, 1.5, 0.5, -1.1999999, 1.5, -0.5, -1.1999999, -1.5, 0.5, -1.1999999, 1.5, 0.5, -1.1999999, -1.5, -0.5, -1.1999999, -1.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_bj47t"]
+size = Vector3(2.5, 0.3, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bj47t"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_bj47t"]
+data = PackedVector3Array(-1.25, 0.14999999, 0.5, 1.25, 0.14999999, 0.5, -1.25, -0.14999999, 0.5, 1.25, 0.14999999, 0.5, 1.25, -0.14999999, 0.5, -1.25, -0.14999999, 0.5, 1.25, 0.14999999, -0.5, -1.25, 0.14999999, -0.5, 1.25, -0.14999999, -0.5, -1.25, 0.14999999, -0.5, -1.25, -0.14999999, -0.5, 1.25, -0.14999999, -0.5, 1.25, 0.14999999, 0.5, 1.25, 0.14999999, -0.5, 1.25, -0.14999999, 0.5, 1.25, 0.14999999, -0.5, 1.25, -0.14999999, -0.5, 1.25, -0.14999999, 0.5, -1.25, 0.14999999, -0.5, -1.25, 0.14999999, 0.5, -1.25, -0.14999999, -0.5, -1.25, 0.14999999, 0.5, -1.25, -0.14999999, 0.5, -1.25, -0.14999999, -0.5, 1.25, 0.14999999, 0.5, -1.25, 0.14999999, 0.5, 1.25, 0.14999999, -0.5, -1.25, 0.14999999, 0.5, -1.25, 0.14999999, -0.5, 1.25, 0.14999999, -0.5, -1.25, -0.14999999, 0.5, 1.25, -0.14999999, 0.5, -1.25, -0.14999999, -0.5, 1.25, -0.14999999, 0.5, 1.25, -0.14999999, -0.5, -1.25, -0.14999999, -0.5)
+
+[node name="Flow" type="Flow" unique_id=402958499 node_paths=PackedStringArray("platform")]
+platform = NodePath("BoxHorizontal")
+moving_up = true
+updown_speed = 2.0
+
+[node name="TriagleBox" type="MeshInstance3D" parent="." unique_id=1684506460]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+mesh = SubResource("BoxMesh_cnpy8")
+surface_material_override/0 = SubResource("StandardMaterial3D_1w5eo")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="TriagleBox" unique_id=1211249487]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TriagleBox/StaticBody3D" unique_id=614505004]
+shape = SubResource("ConcavePolygonShape3D_cnpy8")
+
+[node name="BoxHorizontal" type="MeshInstance3D" parent="." unique_id=975830077]
+mesh = SubResource("BoxMesh_bj47t")
+surface_material_override/0 = SubResource("StandardMaterial3D_bj47t")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="BoxHorizontal" unique_id=1006319013]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BoxHorizontal/StaticBody3D" unique_id=902356207]
+shape = SubResource("ConcavePolygonShape3D_bj47t")

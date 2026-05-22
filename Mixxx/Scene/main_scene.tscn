@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://b4m06iafk8t4v"]
 
 [ext_resource type="Shader" uid="uid://c8y8j47m8ua2a" path="res://Shader/floor_main_scene.gdshader" id="1_31fxm"]
-[ext_resource type="PackedScene" uid="uid://c384l804wfmhh" path="res://Scene/godot_toon_mixamo.tscn" id="1_g51t8"]
+[ext_resource type="PackedScene" uid="uid://c384l804wfmhh" path="res://Scene/godot_toon_mixamo.tscn" id="1_c1vcm"]
 [ext_resource type="PackedScene" uid="uid://08f70ney62v1" path="res://Scene/player.tscn" id="1_j4qrl"]
-[ext_resource type="PackedScene" uid="uid://dkoq24vr4ex08" path="res://Scene/godot_rust_mixamo.tscn" id="2_j1xvy"]
+[ext_resource type="PackedScene" uid="uid://dkoq24vr4ex08" path="res://Scene/godot_rust_mixamo.tscn" id="2_n7l00"]
 [ext_resource type="PackedScene" uid="uid://cauaa7qbkg80t" path="res://Scene/godot_toon.tscn" id="3_06yma"]
 [ext_resource type="PackedScene" uid="uid://dt0m7ugg6xhx" path="res://Scene/crab_rust_toon.tscn" id="4_4kvl3"]
 [ext_resource type="PackedScene" uid="uid://dqq0mmaukjiw5" path="res://Scene/base_mesh.tscn" id="5_lttqn"]
@@ -11,23 +11,17 @@
 [ext_resource type="Texture2D" uid="uid://b54uvwa5sqium" path="res://Imgs/BaseMesh100ds.webp" id="6_k2rys"]
 [ext_resource type="Texture2D" uid="uid://b1manmbokqlf3" path="res://Imgs/GodotToon100ds.webp" id="7_i64o6"]
 [ext_resource type="Texture2D" uid="uid://cwxnh0c0niqj2" path="res://Imgs/RustToon100ds.webp" id="8_0xtjt"]
-[ext_resource type="PackedScene" uid="uid://khitg8mmhvfa" path="res://Scene/wall_door_hold.tscn" id="12_j1xvy"]
 [ext_resource type="PackedScene" uid="uid://cnv7mw8g1fqhm" path="res://Scene/maze_gen.tscn" id="13_7riyq"]
-
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_31fxm"]
-
-[sub_resource type="Sky" id="Sky_06yma"]
-sky_material = SubResource("ProceduralSkyMaterial_31fxm")
-
-[sub_resource type="Environment" id="Environment_4kvl3"]
-background_mode = 2
-sky = SubResource("Sky_06yma")
+[ext_resource type="PackedScene" uid="uid://khitg8mmhvfa" path="res://Scene/osc_wall_door_hold.tscn" id="13_k87s1"]
+[ext_resource type="PackedScene" uid="uid://cpbjmwc32ts60" path="res://Scene/osc_flow.tscn" id="14_k87s1"]
+[ext_resource type="PackedScene" uid="uid://chvd4w6burwgq" path="res://Scene/osc_platform_left_right.tscn" id="14_kx01p"]
+[ext_resource type="PackedScene" uid="uid://dg34hb0fab3pu" path="res://Scene/osc_platform_up_down.tscn" id="15_kx01p"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_lwscp"]
-size = Vector3(100, 1, 100)
+size = Vector3(40, 1, 40)
 
 [sub_resource type="BoxMesh" id="BoxMesh_j4qrl"]
-size = Vector3(100, 1, 100)
+size = Vector3(40, 1, 41)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_06yma"]
 render_priority = 0
@@ -36,21 +30,21 @@ shader_parameter/color1 = Color(0.25, 0.25, 0.25, 1)
 shader_parameter/color2 = Color(0.35, 0.35, 0.35, 1)
 shader_parameter/tile_size = 72.0
 
-[node name="MainScene" type="MainScene" unique_id=1404167172 node_paths=PackedStringArray("player", "base_mesh", "godot_toon", "rust_toon", "how2", "wall_door_hold", "timer_yeah")]
+[sub_resource type="BoxShape3D" id="BoxShape3D_j1xvy"]
+size = Vector3(60, 1, 60)
+
+[node name="MainScene" type="MainScene" unique_id=910066661 node_paths=PackedStringArray("player", "base_mesh", "godot_toon", "rust_toon", "how2", "timer_yeah", "fall_area")]
 player = NodePath("Player")
 base_mesh = NodePath("BaseMesh")
 godot_toon = NodePath("GodotToon")
 rust_toon = NodePath("RustToon")
 how2 = NodePath("Label")
-scene_gdt = ExtResource("1_g51t8")
-scene_gdr = ExtResource("2_j1xvy")
-wall_door_hold = NodePath("WallDoorHold")
+scene_gdt = ExtResource("1_c1vcm")
+scene_gdr = ExtResource("2_n7l00")
 timer_yeah = NodePath("YeahTimer")
+fall_area = NodePath("FallArea")
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1866369971]
-environment = SubResource("Environment_4kvl3")
-
-[node name="Camera3D" type="CameraFollow" parent="." unique_id=1249015587]
+[node name="Camera3D" type="CameraFollow" parent="." unique_id=325016109]
 target_path = NodePath("../Player")
 transform = Transform3D(1, 0, 0, 0, 0.9242864, 0.38169962, 0, -0.38169962, 0.9242864, 0, 2.45656, 4.2118225)
 current = true
@@ -62,28 +56,30 @@ transform = Transform3D(1, 0, 0, 0, 0.8006896, 0.5990795, 0, -0.5990795, 0.80068
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=1019524448]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20)
 shape = SubResource("BoxShape3D_lwscp")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D" unique_id=1263976195]
+[node name="FloorNormal" type="MeshInstance3D" parent="StaticBody3D" unique_id=1263976195]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20)
 mesh = SubResource("BoxMesh_j4qrl")
 surface_material_override/0 = SubResource("ShaderMaterial_06yma")
 
 [node name="Player" parent="." unique_id=2068331013 groups=["player"] instance=ExtResource("1_j4qrl")]
 
 [node name="Skeleton3D" parent="Player/Nhook_NewUniform/metarig" parent_id_path=PackedInt32Array(2068331013, 1911823935, 965695038) index="0" unique_id=33401000]
-bones/3/scale = Vector3(1.0018147, 1.0018147, 1.0018147)
+bones/3/scale = Vector3(1.0726577, 1.0726577, 1.0726577)
 bones/8/scale = Vector3(0.99999994, 1.0000001, 1)
 bones/31/scale = Vector3(0.99999994, 0.9999999, 1)
 bones/58/scale = Vector3(0.99999976, 0.9999998, 0.9999999)
 
 [node name="RustToon" parent="." unique_id=1441850480 groups=["crab_rust_toon"] instance=ExtResource("4_4kvl3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.377083, 0.5, -49.0955)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.377083, 0.5, -36.996372)
 
 [node name="GodotToon" parent="." unique_id=2122828118 groups=["godot_toon"] instance=ExtResource("3_06yma")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 1, -9.546671)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.44113, 1, -12.878147)
 
 [node name="BaseMesh" parent="." unique_id=465993362 groups=["base_mesh"] instance=ExtResource("5_lttqn")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.907356, 0.5, -47.26809)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.907356, 0.5, -35.16896)
 
 [node name="PodiumMix" parent="." unique_id=1686565406 instance=ExtResource("6_i64o6")]
 
@@ -126,20 +122,35 @@ grow_vertical = 2
 theme_override_font_sizes/font_size = 50
 autowrap_mode = 2
 
-[node name="WallDoorHold" parent="." unique_id=1878475270 instance=ExtResource("12_j1xvy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.2008777)
-
 [node name="MazeGen" parent="." unique_id=245170755 instance=ExtResource("13_7riyq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -12)
 
 [node name="YeahTimer" type="Timer" parent="." unique_id=388440747]
-one_shot = true
+
+[node name="FallArea" type="Area3D" parent="." unique_id=58486454]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5, -20)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="FallArea" unique_id=1322781212]
+shape = SubResource("BoxShape3D_j1xvy")
+
+[node name="WallDoorHold" parent="." unique_id=2081128136 instance=ExtResource("13_k87s1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.808919, 0, -8.089464)
+
+[node name="Flow" parent="." unique_id=1054836306 instance=ExtResource("14_k87s1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.073093, 0, -26.75093)
+
+[node name="Platform" parent="." unique_id=1525241984 instance=ExtResource("15_kx01p")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.3, 0, -26.7)
+
+[node name="Platform_Left_Right" parent="." unique_id=1992298782 instance=ExtResource("14_kx01p")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.584854, 0, -22.375967)
 
 [connection signal="body_entered" from="RustToon" to="." method="on_rust_toon_body_entered"]
 [connection signal="body_entered" from="GodotToon" to="." method="on_godot_toon_body_entered"]
 [connection signal="body_entered" from="BaseMesh" to="." method="on_base_mesh_body_entered"]
 [connection signal="body_entered" from="PodiumMix" to="." method="on_podium2mix_body_entered"]
 [connection signal="body_exited" from="PodiumMix" to="." method="on_podium2mix_body_exited"]
+[connection signal="timeout" from="YeahTimer" to="." method="on_timer_timeout"]
+[connection signal="body_entered" from="FallArea" to="." method="on_fall_area_body_entered"]
 
 [editable path="Player"]
 [editable path="Player/Nhook_NewUniform"]
@@ -149,5 +160,3 @@ one_shot = true
 [editable path="GodotToon/GodotToon2"]
 [editable path="BaseMesh"]
 [editable path="BaseMesh/BaseBody"]
-[editable path="WallDoorHold"]
-[editable path="WallDoorHold/RoomBlank"]
