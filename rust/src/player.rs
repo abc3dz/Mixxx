@@ -4,12 +4,15 @@ use godot::prelude::*;
 #[derive(GodotClass)]
 #[class(init, base=CharacterBody3D)]
 pub struct Player {
+    #[export]
     #[init(val = 5.0)]
     speed: f32,
 
-    #[init(val = 6.0)]
+    #[export]
+    #[init(val = 5.0)]
     jump_impulse: f32,
 
+    #[export]
     #[init(val = 9.8)]
     gravity: f32, 
 

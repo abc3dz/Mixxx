@@ -1,43 +1,28 @@
 use godot::prelude::*;
-use godot::classes::{MeshInstance3D, Node3D};
+use godot::classes::{MeshInstance3D, Node3D, Timer};
 
 #[derive(GodotClass)]
 #[class(init, base=Node3D)]
 pub struct Flow {
     #[export]
     platform: OnEditor<Gd<MeshInstance3D>>,
-    #[export] 
-    moving_up: bool,
-    #[export] 
-    updown_speed: f32,
+    #[export]
+    timer: OnEditor<Gd<Timer>>,
     base: Base<Node3D>,
 }
 #[godot_api]
-impl INode3D for Flow{
-    fn process(&mut self, delta: f64) {
-        let mut platform = self.platform.clone();
-        let current_pos = platform.get_position();
-        let mut new_y = current_pos.y;
-
-        if self.moving_up {
-            new_y += self.updown_speed * delta as f32;
-            if new_y >= 1.3 {
-                new_y = 1.3;
-                self.moving_up = false; 
-            }
-        } else {
-            new_y -= self.updown_speed * delta as f32;
-            if new_y <= 0.0 {
-                new_y = 0.0;
-                self.moving_up = true;
-            }
+impl Flow{
+    #[func]
+    fn on_body_entered(&mut self, body: Gd<Node3D>) {
+        if body.is_in_group("player") {
+            let mut platform = self.platform.clone();
+            platform.set_scale(Vector3::new(1.0, 1.0, 1.0));
         }
-
-        platform.set_position(Vector3::new(
-            current_pos.x,
-            new_y,
-            current_pos.z,
-        ));
+        self.timer.clone().start();
+    }       
+    #[func]
+    fn on_timer_timeout(&mut self) {
+        let mut platform = self.platform.clone();
+        platform.set_scale(Vector3::new(0.3, 0.3, 0.3));
     }
-
 }

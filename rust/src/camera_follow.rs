@@ -1,29 +1,29 @@
 use godot::prelude::*;
 use godot::classes::{Camera3D, ICamera3D, Node3D};
-
+use crate::main_scene::MainScene;
 #[derive(GodotClass)]
-#[class(base=Camera3D)]
+#[class(init, base=Camera3D)]
 pub struct CameraFollow {
     #[export]
     target_path: NodePath,
     #[export]
     smooth: f32,
+    #[export]
     offset: Vector3,
+    #[export]
+    main_scene: OnEditor<Gd<MainScene>>,
     base: Base<Camera3D>,
 }
 
 #[godot_api]
 impl ICamera3D for CameraFollow {
-    fn init(base: Base<Camera3D>) -> Self {
-        Self {
-            target_path: NodePath::default(),
-            smooth: 5.0,
-            offset: Vector3::new(0.0, 6.0, 5.0),
-            base,
-        }
-    }
-
     fn process(&mut self, delta: f64) {
+        
+        if self.main_scene.bind().collected_podium {
+            self.base_mut().set_position(Vector3 { x: -11.0, y: (3.0), z: (-16.5) });
+            return;
+        }
+
         let path = self.target_path.clone();
         let target = self.base().get_node_or_null(&path);  // ✅ ใช้ &path
 

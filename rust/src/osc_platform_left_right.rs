@@ -8,10 +8,7 @@ use godot::classes::tween::EaseType;
 pub struct PlatformLeftRight {
     #[export]
     platform: OnEditor<Gd<MeshInstance3D>>,
-    #[export] 
-    moving_up: bool,
-    #[export]
-    updown_speed: f32,
+    
     base: Base<Node3D>,
 }
 #[godot_api]
