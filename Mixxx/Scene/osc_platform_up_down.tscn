@@ -1,10 +1,17 @@
 [gd_scene format=3 uid="uid://dg34hb0fab3pu"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_egmqy"]
-size = Vector3(3, 2.4, 1)
+[ext_resource type="Shader" uid="uid://rr76g78o83ec" path="res://Shader/VertHori.gdshader" id="1_hftqs"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_egmqy"]
-albedo_color = Color(0.44297108, 0.7604822, 0.89420825, 0.5)
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_s3r58"]
+render_priority = 0
+shader = ExtResource("1_hftqs")
+shader_parameter/color1 = Color(0.00019459262, 0.18756899, 0.62443054, 1)
+shader_parameter/color2 = Color(0.35658488, 0.36837488, 0.05217319, 1)
+shader_parameter/tile_size = -0.245
+
+[sub_resource type="BoxMesh" id="BoxMesh_egmqy"]
+material = SubResource("ShaderMaterial_s3r58")
+size = Vector3(3, 2.4, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_p7ult"]
 size = Vector3(3, 2.4, 1)
@@ -21,7 +28,6 @@ moving_up = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=901053178]
 mesh = SubResource("BoxMesh_egmqy")
-surface_material_override/0 = SubResource("StandardMaterial3D_egmqy")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D" unique_id=253001573]
 
@@ -40,5 +46,12 @@ shape = SubResource("BoxShape3D_egmqy")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 1.25, 1)
 shape = SubResource("BoxShape3D_xa5sh")
 
+[node name="AreaDown2" type="Area3D" parent="." unique_id=790954931]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0, -1)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AreaDown2" unique_id=751093718]
+shape = SubResource("BoxShape3D_xa5sh")
+
 [connection signal="body_entered" from="AreaUp" to="." method="on_up_body_entered"]
 [connection signal="body_entered" from="AreaDown" to="." method="on_down_body_entered"]
+[connection signal="body_entered" from="AreaDown2" to="." method="on_down_body_entered"]

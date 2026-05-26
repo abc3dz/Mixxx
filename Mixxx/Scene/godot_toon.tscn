@@ -1,13 +1,40 @@
 [gd_scene format=3 uid="uid://cauaa7qbkg80t"]
 
 [ext_resource type="PackedScene" uid="uid://bqfye2a4n470e" path="res://Models/GodotToon2.glb" id="1_h7pt2"]
+[ext_resource type="Shader" uid="uid://bhahs41liecft" path="res://Shader/outline.gdshader" id="2_e1cds"]
 [ext_resource type="Texture2D" uid="uid://ciuiqxw121g42" path="res://Models/Textures/TT_Color-min.png" id="2_qx4eq"]
+[ext_resource type="Shader" uid="uid://x586rwkuiaki" path="res://Shader/NhookShader.gdshader" id="3_cegxc"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_lna13"]
 size = Vector3(1.0632019, 0.97058105, 0.38031006)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qx4eq"]
-albedo_texture = ExtResource("2_qx4eq")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e18sg"]
+render_priority = 0
+shader = ExtResource("2_e1cds")
+shader_parameter/albedo = Color(0, 0, 0, 1)
+shader_parameter/grow = 0.01
+shader_parameter/albedo_texture_size = Vector2i(0, 0)
+shader_parameter/point_size = 0.0
+shader_parameter/roughness = 0.0
+shader_parameter/metallic_texture_channel = Vector4(0, 0, 0, 0)
+shader_parameter/specular = 0.0
+shader_parameter/metallic = 0.0
+shader_parameter/uv1_scale = Vector3(0, 0, 0)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(0, 0, 0)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tp5bh"]
+render_priority = 0
+next_pass = SubResource("ShaderMaterial_e18sg")
+shader = ExtResource("3_cegxc")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/texture_albedo = ExtResource("2_qx4eq")
+shader_parameter/roughness = 1.0
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 0.0
+shader_parameter/shadow_steps = 3.0
+shader_parameter/light_wrap = 0.1
 
 [node name="GodotToon" type="FloatingItem" unique_id=2122828118]
 
@@ -18,7 +45,7 @@ shape = SubResource("BoxShape3D_lna13")
 [node name="GodotToon2" parent="." unique_id=1731308964 instance=ExtResource("1_h7pt2")]
 
 [node name="Godot_Toon" parent="GodotToon2" index="0" unique_id=235784937]
-surface_material_override/0 = SubResource("StandardMaterial3D_qx4eq")
+surface_material_override/0 = SubResource("ShaderMaterial_tp5bh")
 
 [connection signal="body_entered" from="." to="." method="on_body_entered"]
 

@@ -1,13 +1,40 @@
 [gd_scene format=3 uid="uid://dqq0mmaukjiw5"]
 
 [ext_resource type="PackedScene" uid="uid://bipimm0xbqnri" path="res://Models/BaseBody.glb" id="1_w3rwm"]
+[ext_resource type="Shader" uid="uid://bhahs41liecft" path="res://Shader/outline.gdshader" id="2_2luad"]
 [ext_resource type="Texture2D" uid="uid://ciuiqxw121g42" path="res://Models/Textures/TT_Color-min.png" id="2_f5m3n"]
+[ext_resource type="Shader" uid="uid://x586rwkuiaki" path="res://Shader/NhookShader.gdshader" id="3_6s2i4"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_w3rwm"]
 height = 1.699707
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f5m3n"]
-albedo_texture = ExtResource("2_f5m3n")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2mal4"]
+render_priority = 0
+shader = ExtResource("2_2luad")
+shader_parameter/albedo = Color(0, 0, 0, 1)
+shader_parameter/grow = 0.01
+shader_parameter/albedo_texture_size = Vector2i(0, 0)
+shader_parameter/point_size = 0.0
+shader_parameter/roughness = 0.0
+shader_parameter/metallic_texture_channel = Vector4(0, 0, 0, 0)
+shader_parameter/specular = 0.0
+shader_parameter/metallic = 0.0
+shader_parameter/uv1_scale = Vector3(0, 0, 0)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(0, 0, 0)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6edib"]
+render_priority = 0
+next_pass = SubResource("ShaderMaterial_2mal4")
+shader = ExtResource("3_6s2i4")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/texture_albedo = ExtResource("2_f5m3n")
+shader_parameter/roughness = 1.0
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 0.0
+shader_parameter/shadow_steps = 3.0
+shader_parameter/light_wrap = 0.1
 
 [node name="BaseMesh" type="FloatingItem" unique_id=465993362]
 
@@ -18,7 +45,7 @@ shape = SubResource("CapsuleShape3D_w3rwm")
 [node name="BaseBody" parent="." unique_id=296786796 instance=ExtResource("1_w3rwm")]
 
 [node name="BaseMesh" parent="BaseBody" index="0" unique_id=304159245]
-surface_material_override/0 = SubResource("StandardMaterial3D_f5m3n")
+surface_material_override/0 = SubResource("ShaderMaterial_6edib")
 
 [connection signal="body_entered" from="." to="." method="on_body_entered"]
 

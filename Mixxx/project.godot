@@ -13,7 +13,7 @@ config_version=5
 config/name="Mixxx"
 run/main_scene="uid://b4m06iafk8t4v"
 config/features=PackedStringArray("4.6", "Forward Plus")
-config/icon="res://icon.svg"
+config/icon="uid://dhp2crj0osf4p"
 
 [dotnet]
 

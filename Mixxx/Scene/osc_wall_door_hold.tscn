@@ -1,10 +1,17 @@
 [gd_scene format=3 uid="uid://khitg8mmhvfa"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_dd6xq"]
-size = Vector3(4, 2.4, 0.3)
+[ext_resource type="Shader" uid="uid://rr76g78o83ec" path="res://Shader/VertHori.gdshader" id="1_han4b"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_imgdq"]
-albedo_color = Color(0.17261231, 0.20162779, 0.7023302, 1)
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lc6ns"]
+render_priority = 0
+shader = ExtResource("1_han4b")
+shader_parameter/color1 = Color(0.34550455, 0.2226308, 0.0063868063, 1)
+shader_parameter/color2 = Color(0.98669523, 0.3491902, 0.3491902, 1)
+shader_parameter/tile_size = 0.3
+
+[sub_resource type="BoxMesh" id="BoxMesh_dd6xq"]
+material = SubResource("ShaderMaterial_lc6ns")
+size = Vector3(4, 2.4, 0.3)
 
 [sub_resource type="BoxMesh" id="BoxMesh_cw2ci"]
 size = Vector3(2, 2.5, 1)
@@ -22,7 +29,6 @@ static_door = NodePath("Wall/DoorHold/StaticBody3D")
 [node name="Wall" type="CSGMesh3D" parent="." unique_id=1206016780]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.205439, 0)
 mesh = SubResource("BoxMesh_dd6xq")
-material = SubResource("StandardMaterial3D_imgdq")
 
 [node name="DoorHold" type="CSGMesh3D" parent="Wall" unique_id=1253696390]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 0)

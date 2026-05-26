@@ -2,14 +2,40 @@
 
 [ext_resource type="PackedScene" uid="uid://b1127bv8n8sjw" path="res://Models/GodotToonMixamo.glb" id="1_obqfa"]
 [ext_resource type="Texture2D" uid="uid://ciuiqxw121g42" path="res://Models/Textures/TT_Color-min.png" id="2_4xf3o"]
-[ext_resource type="PackedScene" uid="uid://b7vcun4ugftd4" path="res://Scene/podium_mix.tscn" id="3_iemjx"]
+[ext_resource type="Shader" uid="uid://bhahs41liecft" path="res://Shader/outline.gdshader" id="2_7tksy"]
+[ext_resource type="Shader" uid="uid://x586rwkuiaki" path="res://Shader/NhookShader.gdshader" id="3_brsy1"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_0aacq"]
 radius = 0.29296875
 height = 1.7036133
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iemjx"]
-albedo_texture = ExtResource("2_4xf3o")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ijjde"]
+render_priority = 0
+shader = ExtResource("2_7tksy")
+shader_parameter/albedo = Color(0, 0, 0, 1)
+shader_parameter/grow = 0.01
+shader_parameter/albedo_texture_size = Vector2i(0, 0)
+shader_parameter/point_size = 0.0
+shader_parameter/roughness = 0.0
+shader_parameter/metallic_texture_channel = Vector4(0, 0, 0, 0)
+shader_parameter/specular = 0.0
+shader_parameter/metallic = 0.0
+shader_parameter/uv1_scale = Vector3(0, 0, 0)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(0, 0, 0)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_k61h8"]
+render_priority = 0
+next_pass = SubResource("ShaderMaterial_ijjde")
+shader = ExtResource("3_brsy1")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/texture_albedo = ExtResource("2_4xf3o")
+shader_parameter/roughness = 1.0
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 0.0
+shader_parameter/shadow_steps = 3.0
+shader_parameter/light_wrap = 0.1
 
 [sub_resource type="Animation" id="Animation_4xf3o"]
 length = 0.001
@@ -502,7 +528,8 @@ roughness = 0.12
 material = SubResource("StandardMaterial3D_7tksy")
 size = Vector2(0.1, 0.3)
 
-[node name="GodotToonMixamo" type="SceneGDT" unique_id=456840588]
+[node name="GodotToonMixamo" type="SceneGDT" unique_id=456840588 node_paths=PackedStringArray("anim_player")]
+anim_player = NodePath("AnimationPlayer")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=395996815]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8688284, 0)
@@ -524,13 +551,10 @@ bones/24/rotation = Quaternion(0.03247316, -0.0009536172, -0.029108455, 0.999048
 bones/31/rotation = Quaternion(0.13432087, -0.008566123, -0.06306216, 0.9888922)
 
 [node name="GodotBaseMesh" parent="GodotToonMixamo/Armature/Skeleton3D" index="0" unique_id=2047480189]
-surface_material_override/0 = SubResource("StandardMaterial3D_iemjx")
+surface_material_override/0 = SubResource("ShaderMaterial_k61h8")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1439925395]
 libraries/ = SubResource("AnimationLibrary_dkcpu")
-
-[node name="PodiumMix" parent="." unique_id=435913317 instance=ExtResource("3_iemjx")]
-visible = false
 
 [node name="GdtParticles3D" type="GPUParticles3D" parent="." unique_id=1216392268]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05388534, 0, 0.0049511194)

@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://b4m06iafk8t4v"]
 
-[ext_resource type="Shader" uid="uid://c8y8j47m8ua2a" path="res://Shader/floor_main_scene.gdshader" id="1_31fxm"]
 [ext_resource type="PackedScene" uid="uid://c384l804wfmhh" path="res://Scene/godot_toon_mixamo.tscn" id="1_c1vcm"]
 [ext_resource type="PackedScene" uid="uid://08f70ney62v1" path="res://Scene/player.tscn" id="1_j4qrl"]
 [ext_resource type="PackedScene" uid="uid://dkoq24vr4ex08" path="res://Scene/godot_rust_mixamo.tscn" id="2_n7l00"]
 [ext_resource type="PackedScene" uid="uid://cauaa7qbkg80t" path="res://Scene/godot_toon.tscn" id="3_06yma"]
+[ext_resource type="Shader" uid="uid://rr76g78o83ec" path="res://Shader/VertHori.gdshader" id="3_c1vcm"]
 [ext_resource type="PackedScene" uid="uid://dt0m7ugg6xhx" path="res://Scene/crab_rust_toon.tscn" id="4_4kvl3"]
 [ext_resource type="PackedScene" uid="uid://dqq0mmaukjiw5" path="res://Scene/base_mesh.tscn" id="5_lttqn"]
 [ext_resource type="PackedScene" uid="uid://b7vcun4ugftd4" path="res://Scene/podium_mix.tscn" id="6_i64o6"]
@@ -18,34 +18,56 @@
 [ext_resource type="PackedScene" uid="uid://dg34hb0fab3pu" path="res://Scene/osc_platform_up_down.tscn" id="15_kx01p"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_lwscp"]
-size = Vector3(40, 1, 40)
-
-[sub_resource type="BoxMesh" id="BoxMesh_j4qrl"]
 size = Vector3(40, 1, 41)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_06yma"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_n7l00"]
 render_priority = 0
-shader = ExtResource("1_31fxm")
+shader = ExtResource("3_c1vcm")
 shader_parameter/color1 = Color(0.25, 0.25, 0.25, 1)
 shader_parameter/color2 = Color(0.35, 0.35, 0.35, 1)
-shader_parameter/tile_size = 72.0
+shader_parameter/tile_size = 1.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_j4qrl"]
+material = SubResource("ShaderMaterial_n7l00")
+size = Vector3(40, 1, 41)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n7l00"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.060457885, 0.49352366, 0.25712585, 0.6)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_j1xvy"]
 size = Vector3(60, 1, 60)
 
-[node name="MainScene" type="MainScene" unique_id=910066661 node_paths=PackedStringArray("player", "base_mesh", "godot_toon", "rust_toon", "how2", "timer_yeah", "fall_area")]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c1vcm"]
+bg_color = Color(0.8627226, 0.47210306, 0.43477002, 1)
+
+[node name="MainScene" type="MainScene" unique_id=910066661 node_paths=PackedStringArray("player", "base_mesh", "godot_toon", "rust_toon", "podium_mix", "how2", "timer_yeah", "fall_area", "ending", "show_ending_label")]
 player = NodePath("Player")
 base_mesh = NodePath("BaseMesh")
 godot_toon = NodePath("GodotToon")
 rust_toon = NodePath("RustToon")
+podium_mix = NodePath("PodiumMix")
+collected = 2
 how2 = NodePath("Label")
 scene_gdt = ExtResource("1_c1vcm")
 scene_gdr = ExtResource("2_n7l00")
 timer_yeah = NodePath("YeahTimer")
 fall_area = NodePath("FallArea")
+ending = NodePath("EndingVBox")
+show_ending_label = NodePath("EndingVBox/HBoxContainer2/Time2Play")
 
-[node name="Camera3D" type="CameraFollow" parent="." unique_id=325016109]
+[node name="Camera3D" type="CameraFollow" parent="." unique_id=325016109 node_paths=PackedStringArray("main_scene")]
 target_path = NodePath("../Player")
+smooth = 5.0
+offset = Vector3(0, 4, 4)
+main_scene = NodePath("..")
 transform = Transform3D(1, 0, 0, 0, 0.9242864, 0.38169962, 0, -0.38169962, 0.9242864, 0, 2.45656, 4.2118225)
 current = true
 
@@ -62,15 +84,11 @@ shape = SubResource("BoxShape3D_lwscp")
 [node name="FloorNormal" type="MeshInstance3D" parent="StaticBody3D" unique_id=1263976195]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20)
 mesh = SubResource("BoxMesh_j4qrl")
-surface_material_override/0 = SubResource("ShaderMaterial_06yma")
 
 [node name="Player" parent="." unique_id=2068331013 groups=["player"] instance=ExtResource("1_j4qrl")]
 
-[node name="Skeleton3D" parent="Player/Nhook_NewUniform/metarig" parent_id_path=PackedInt32Array(2068331013, 1911823935, 965695038) index="0" unique_id=33401000]
-bones/3/scale = Vector3(1.0726577, 1.0726577, 1.0726577)
-bones/8/scale = Vector3(0.99999994, 1.0000001, 1)
-bones/31/scale = Vector3(0.99999994, 0.9999999, 1)
-bones/58/scale = Vector3(0.99999976, 0.9999998, 0.9999999)
+[node name="Skeleton3D" parent="Player/Nhook_Mixamo/Armature" parent_id_path=PackedInt32Array(2068331013, 294982209, 708592899) index="0" unique_id=613990072]
+bones/3/scale = Vector3(1.0074576, 1.0074576, 1.0074576)
 
 [node name="RustToon" parent="." unique_id=1441850480 groups=["crab_rust_toon"] instance=ExtResource("4_4kvl3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.377083, 0.5, -36.996372)
@@ -108,23 +126,31 @@ layout_mode = 2
 texture = ExtResource("6_k2rys")
 
 [node name="Label" type="Label" parent="." unique_id=238994392]
-anchors_preset = 8
+anchors_preset = 5
 anchor_left = 0.5
-anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 0.5
 offset_left = -270.5
-offset_top = -142.5
 offset_right = 270.5
-offset_bottom = 142.5
+offset_bottom = 285.0
 grow_horizontal = 2
-grow_vertical = 2
 theme_override_font_sizes/font_size = 50
 autowrap_mode = 2
+
+[node name="RestartButton" type="Button" parent="." unique_id=1397947717]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -73.0
+offset_bottom = 36.0
+grow_horizontal = 0
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_n7l00")
+text = "Restart"
 
 [node name="MazeGen" parent="." unique_id=245170755 instance=ExtResource("13_7riyq")]
 
 [node name="YeahTimer" type="Timer" parent="." unique_id=388440747]
+one_shot = true
 
 [node name="FallArea" type="Area3D" parent="." unique_id=58486454]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5, -20)
@@ -136,24 +162,79 @@ shape = SubResource("BoxShape3D_j1xvy")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.808919, 0, -8.089464)
 
 [node name="Flow" parent="." unique_id=1054836306 instance=ExtResource("14_k87s1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.073093, 0, -26.75093)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.651865, 0, -26.75093)
 
 [node name="Platform" parent="." unique_id=1525241984 instance=ExtResource("15_kx01p")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.3, 0, -26.7)
 
 [node name="Platform_Left_Right" parent="." unique_id=1992298782 instance=ExtResource("14_kx01p")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.584854, 0, -22.375967)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.6, 0, -22.4)
+
+[node name="Panel" type="Panel" parent="." unique_id=490353836]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -194.5
+offset_top = -106.5
+offset_right = 194.5
+offset_bottom = 106.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_c1vcm")
+
+[node name="EndingVBox" type="VBoxContainer" parent="." unique_id=724969430]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -156.5
+offset_top = -71.5
+offset_right = 156.5
+offset_bottom = 71.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 15
+
+[node name="ThxLabel" type="Label" parent="EndingVBox" unique_id=491647533]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Thank you for playing"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="EndingVBox" unique_id=786274969]
+layout_mode = 2
+
+[node name="TimeLabel" type="Label" parent="EndingVBox/HBoxContainer2" unique_id=1267022623]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "Time to play: "
+
+[node name="Time2Play" type="Label" parent="EndingVBox/HBoxContainer2" unique_id=777675596]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "00"
+
+[node name="CloseButton" type="Button" parent="EndingVBox" unique_id=1437978735]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Close"
 
 [connection signal="body_entered" from="RustToon" to="." method="on_rust_toon_body_entered"]
 [connection signal="body_entered" from="GodotToon" to="." method="on_godot_toon_body_entered"]
 [connection signal="body_entered" from="BaseMesh" to="." method="on_base_mesh_body_entered"]
 [connection signal="body_entered" from="PodiumMix" to="." method="on_podium2mix_body_entered"]
 [connection signal="body_exited" from="PodiumMix" to="." method="on_podium2mix_body_exited"]
+[connection signal="pressed" from="RestartButton" to="." method="on_restart_button_pressed"]
 [connection signal="timeout" from="YeahTimer" to="." method="on_timer_timeout"]
 [connection signal="body_entered" from="FallArea" to="." method="on_fall_area_body_entered"]
+[connection signal="pressed" from="EndingVBox/CloseButton" to="." method="on_close_button_pressed"]
 
 [editable path="Player"]
-[editable path="Player/Nhook_NewUniform"]
+[editable path="Player/Nhook_Mixamo"]
 [editable path="RustToon"]
 [editable path="RustToon/RustToon"]
 [editable path="GodotToon"]

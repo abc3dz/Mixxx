@@ -1,13 +1,40 @@
 [gd_scene format=3 uid="uid://dt0m7ugg6xhx"]
 
 [ext_resource type="PackedScene" uid="uid://dll0r6kpa0uy0" path="res://Models/RustToon.glb" id="1_165al"]
+[ext_resource type="Shader" uid="uid://bhahs41liecft" path="res://Shader/outline.gdshader" id="2_lna13"]
 [ext_resource type="Texture2D" uid="uid://ciuiqxw121g42" path="res://Models/Textures/TT_Color-min.png" id="2_t1x5e"]
+[ext_resource type="Shader" uid="uid://x586rwkuiaki" path="res://Shader/NhookShader.gdshader" id="3_vjj3t"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_lna13"]
 size = Vector3(1.1434326, 0.5004883, 1)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_165al"]
-albedo_texture = ExtResource("2_t1x5e")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wew2r"]
+render_priority = 0
+shader = ExtResource("2_lna13")
+shader_parameter/albedo = Color(0, 0, 0, 1)
+shader_parameter/grow = 0.010000760474998316
+shader_parameter/albedo_texture_size = Vector2i(0, 0)
+shader_parameter/point_size = 0.0
+shader_parameter/roughness = 0.0
+shader_parameter/metallic_texture_channel = Vector4(0, 0, 0, 0)
+shader_parameter/specular = 0.0
+shader_parameter/metallic = 0.0
+shader_parameter/uv1_scale = Vector3(0, 0, 0)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(0, 0, 0)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dwaqc"]
+render_priority = 0
+next_pass = SubResource("ShaderMaterial_wew2r")
+shader = ExtResource("3_vjj3t")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/texture_albedo = ExtResource("2_t1x5e")
+shader_parameter/roughness = 1.0
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 0.0
+shader_parameter/shadow_steps = 3.0
+shader_parameter/light_wrap = 0.1
 
 [node name="CrabRustToon" type="FloatingItem" unique_id=465993362]
 
@@ -18,7 +45,7 @@ shape = SubResource("BoxShape3D_lna13")
 [node name="RustToon" parent="." unique_id=1733675662 instance=ExtResource("1_165al")]
 
 [node name="Rust_Toon" parent="RustToon" index="0" unique_id=391964137]
-surface_material_override/0 = SubResource("StandardMaterial3D_165al")
+surface_material_override/0 = SubResource("ShaderMaterial_dwaqc")
 
 [connection signal="body_entered" from="." to="." method="on_body_entered"]
 

@@ -1,6 +1,16 @@
 [gd_scene format=3 uid="uid://chvd4w6burwgq"]
 
+[ext_resource type="Shader" uid="uid://rr76g78o83ec" path="res://Shader/VertHori.gdshader" id="1_xd5ml"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_iu06n"]
+render_priority = 0
+shader = ExtResource("1_xd5ml")
+shader_parameter/color1 = Color(0.36073232, 0.2119256, 0.02256928, 1)
+shader_parameter/color2 = Color(0.41501096, 0.33097678, 0.25758561, 1)
+shader_parameter/tile_size = 0.3
+
 [sub_resource type="BoxMesh" id="BoxMesh_momod"]
+material = SubResource("ShaderMaterial_iu06n")
 size = Vector3(2, 2.4, 0.3)
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_momod"]
@@ -23,6 +33,7 @@ mesh = SubResource("BoxMesh_momod")
 shape = SubResource("ConcavePolygonShape3D_momod")
 
 [node name="LeftArea" type="Area3D" parent="." unique_id=1430933419]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.6)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="LeftArea" unique_id=256959172]
 shape = SubResource("BoxShape3D_momod")
@@ -33,5 +44,13 @@ shape = SubResource("BoxShape3D_momod")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, 0)
 shape = SubResource("BoxShape3D_xd5ml")
 
+[node name="RughtBack" type="Area3D" parent="." unique_id=639680861]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.6)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RughtBack" unique_id=307287128]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8, 0)
+shape = SubResource("BoxShape3D_xd5ml")
+
 [connection signal="body_entered" from="LeftArea" to="." method="on_left_body_entered"]
 [connection signal="body_entered" from="RightArea" to="." method="on_right_body_entered"]
+[connection signal="body_entered" from="RughtBack" to="." method="on_right_body_entered"]
