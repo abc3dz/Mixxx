@@ -1,9 +1,9 @@
 use godot::prelude::*;
 
-struct SquashTheCreeps;
+struct Mixxx;
 
 #[gdextension]
-unsafe impl ExtensionLibrary for SquashTheCreeps {}
+unsafe impl ExtensionLibrary for Mixxx {}
 
 mod main_scene;
 mod player;

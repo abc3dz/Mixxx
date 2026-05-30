@@ -25,7 +25,7 @@ pub struct MainScene {
     #[init(node = "HBoxContainer/RustToonTR")]
     rust_toon_tr: OnReady<Gd<TextureRect>>,
     #[export]
-    collected: i32,
+    pub collected: i32,
     #[export]
     pub collected_podium: bool,
     #[export]
@@ -75,7 +75,7 @@ impl MainScene {
             let texture = load::<Texture2D>("res://Imgs/RustToon100.webp");
             self.rust_toon_tr.set_texture(&texture);
             self.collected += 1;
-
+            godot_print!("Collected: {}", self.collected);
             self.timer_yeah.start();
             let mut player_anim_tree = self.player.get_node_as::<AnimationTree>("AnimationTree");
             player_anim_tree.set(
@@ -84,6 +84,7 @@ impl MainScene {
             );
             let mut collect_gpu = self.player.get_node_as::<GpuParticles3D>("CollectedGPU");
             collect_gpu.set_emitting(true);
+            self.podium_mix.set_position(Vector3 { x: (5.8), y: (0.0), z: (-28.8) });
         }
     }
     #[func]
@@ -92,7 +93,7 @@ impl MainScene {
             let texture = load::<Texture2D>("res://Imgs/GodotToon100.webp");
             self.godot_toon_tr.set_texture(&texture);
             self.collected += 1;
-
+            godot_print!("Collected: {}", self.collected);
             self.timer_yeah.start();
             let mut player_anim_tree = self.player.get_node_as::<AnimationTree>("AnimationTree");
             player_anim_tree.set(
@@ -101,6 +102,7 @@ impl MainScene {
             );
             let mut collect_gpu = self.player.get_node_as::<GpuParticles3D>("CollectedGPU");
             collect_gpu.set_emitting(true);
+            self.podium_mix.set_position(Vector3 { x: (10.8), y: (0.0), z: (-4.0) });
         }
     }
     #[func]
@@ -109,7 +111,7 @@ impl MainScene {
             let texture = load::<Texture2D>("res://Imgs/BaseMesh100.webp");
             self.base_mesh_tr.set_texture(&texture);
             self.collected += 1;
-
+            godot_print!("Collected: {}", self.collected);
             self.timer_yeah.start();
             let mut player_anim_tree = self.player.get_node_as::<AnimationTree>("AnimationTree");
             player_anim_tree.set(
@@ -163,7 +165,6 @@ impl MainScene {
             "parameters/yeah_blend/blend_amount",
             &Variant::from(0.0_f32),
         );
-        godot_print!("Timer timeout: yeah animation reset");
     }
     #[func]
     fn on_fall_area_body_entered(&mut self, body: Gd<Node3D>) {

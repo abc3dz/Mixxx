@@ -1,5 +1,5 @@
 use godot::prelude::*;
-use godot::classes::{Node3D, MeshInstance3D};
+use godot::classes::{Node3D, MeshInstance3D, AudioStreamPlayer3D};
 use godot::classes::tween::TransitionType;
 use godot::classes::tween::EaseType;
 
@@ -8,7 +8,10 @@ use godot::classes::tween::EaseType;
 pub struct PlatformLeftRight {
     #[export]
     platform: OnEditor<Gd<MeshInstance3D>>,
-    
+    #[export]
+    left_sound: OnEditor<Gd<AudioStreamPlayer3D>>,
+    #[export]
+    right_sound: OnEditor<Gd<AudioStreamPlayer3D>>,
     base: Base<Node3D>,
 }
 #[godot_api]
@@ -28,6 +31,9 @@ impl PlatformLeftRight {
                 )
                 .set_trans(TransitionType::SINE)
                 .set_ease(EaseType::IN_OUT);
+
+            let mut left_sound = self.left_sound.clone();
+            left_sound.play();
         }
     }
     #[func]
@@ -45,6 +51,8 @@ impl PlatformLeftRight {
                 )
                 .set_trans(TransitionType::SINE)
                 .set_ease(EaseType::IN_OUT);
+            let mut right_sound = self.right_sound.clone();
+            right_sound.play();
         }
     }
 }

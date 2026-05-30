@@ -1,4 +1,4 @@
-use godot::classes::{CharacterBody3D, ICharacterBody3D, Input, AnimationTree};
+use godot::classes::{AnimationTree, AudioStreamPlayer3D, CharacterBody3D, ICharacterBody3D, Input};
 use godot::prelude::*;
 
 #[derive(GodotClass)]
@@ -25,10 +25,8 @@ impl ICharacterBody3D for Player {
         let speed = self.speed;
         let jump_impulse = self.jump_impulse;
         let gravity = self.gravity;
-        let mut anim_tree = self.base().get_node_as::<AnimationTree>("AnimationTree");
-
         let mut base = self.base_mut();
-
+        let mut anim_tree = base.get_node_as::<AnimationTree>("AnimationTree");
         let mut velocity = base.get_velocity();
 
         // Gravity
@@ -45,6 +43,8 @@ impl ICharacterBody3D for Player {
                 "parameters/jump_os/request",
                 &Variant::from(1.0_f32),
             );
+            
+            base.get_node_as::<AudioStreamPlayer3D>("JumpSound").play();
         }
 
         // Movement input
@@ -63,11 +63,14 @@ impl ICharacterBody3D for Player {
 
             let angle = f32::atan2(direction.x, direction.z);
             base.set_rotation(Vector3::new(0.0, angle, 0.0));
-
             anim_tree.set(
                 "parameters/idle_walk/blend_amount",
                 &Variant::from(1.0_f32),
             );
+            
+            if !base.get_node_as::<AudioStreamPlayer3D>("WalkSound").is_playing() {
+                base.get_node_as::<AudioStreamPlayer3D>("WalkSound").play();
+            }
         } else {
             velocity.x = 0.0;
             velocity.z = 0.0;
