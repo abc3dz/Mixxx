@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://dg34hb0fab3pu"]
 
 [ext_resource type="Shader" uid="uid://rr76g78o83ec" path="res://Shader/VertHori.gdshader" id="1_hftqs"]
+[ext_resource type="AudioStream" uid="uid://n5pdxs3lst4d" path="res://Sounds/ostc4_2.wav" id="2_f8a3q"]
+[ext_resource type="AudioStream" uid="uid://bgd0ggtlf8o5j" path="res://Sounds/ostc4_1.wav" id="3_3s7n7"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_s3r58"]
 render_priority = 0
@@ -22,9 +24,10 @@ size = Vector3(3, 1, 1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_xa5sh"]
 size = Vector3(2, 1, 1)
 
-[node name="PlatformUpDown" type="PlatformUpDown" unique_id=166930633 node_paths=PackedStringArray("platform")]
+[node name="PlatformUpDown" type="PlatformUpDown" unique_id=166930633 node_paths=PackedStringArray("platform", "up_sound", "down_sound")]
 platform = NodePath("MeshInstance3D")
-moving_up = true
+up_sound = NodePath("AreaUp/UpAudio")
+down_sound = NodePath("AreaDown/DownAudio")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=901053178]
 mesh = SubResource("BoxMesh_egmqy")
@@ -40,11 +43,17 @@ shape = SubResource("BoxShape3D_p7ult")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 1)
 shape = SubResource("BoxShape3D_egmqy")
 
+[node name="UpAudio" type="AudioStreamPlayer3D" parent="AreaUp" unique_id=1088939527]
+stream = ExtResource("2_f8a3q")
+
 [node name="AreaDown" type="Area3D" parent="." unique_id=74911075]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="AreaDown" unique_id=1721488224]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 1.25, 1)
 shape = SubResource("BoxShape3D_xa5sh")
+
+[node name="DownAudio" type="AudioStreamPlayer3D" parent="AreaDown" unique_id=507104258]
+stream = ExtResource("3_3s7n7")
 
 [node name="AreaDown2" type="Area3D" parent="." unique_id=790954931]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0, -1)

@@ -4,6 +4,7 @@
 [ext_resource type="Shader" uid="uid://bhahs41liecft" path="res://Shader/outline.gdshader" id="2_2luad"]
 [ext_resource type="Texture2D" uid="uid://ciuiqxw121g42" path="res://Models/Textures/TT_Color-min.png" id="2_f5m3n"]
 [ext_resource type="Shader" uid="uid://x586rwkuiaki" path="res://Shader/NhookShader.gdshader" id="3_6s2i4"]
+[ext_resource type="AudioStream" uid="uid://cmgjj4notpwr8" path="res://Sounds/collected_base_mesh.wav" id="5_6s2i4"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_w3rwm"]
 height = 1.699707
@@ -36,7 +37,9 @@ shader_parameter/metallic = 0.0
 shader_parameter/shadow_steps = 3.0
 shader_parameter/light_wrap = 0.1
 
-[node name="BaseMesh" type="FloatingItem" unique_id=465993362]
+[node name="BaseMesh" type="FloatingItem" unique_id=465993362 node_paths=PackedStringArray("on_sound", "timer_sound")]
+on_sound = NodePath("AudioStreamPlayer3D")
+timer_sound = NodePath("SoundTimer")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1978558497]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0025024414, 0.8442544, 0)
@@ -47,6 +50,12 @@ shape = SubResource("CapsuleShape3D_w3rwm")
 [node name="BaseMesh" parent="BaseBody" index="0" unique_id=304159245]
 surface_material_override/0 = SubResource("ShaderMaterial_6edib")
 
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=1156803293]
+stream = ExtResource("5_6s2i4")
+
+[node name="SoundTimer" type="Timer" parent="." unique_id=231197024]
+
 [connection signal="body_entered" from="." to="." method="on_body_entered"]
+[connection signal="timeout" from="SoundTimer" to="." method="on_timer_timeout"]
 
 [editable path="BaseBody"]

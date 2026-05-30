@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://khitg8mmhvfa"]
 
 [ext_resource type="Shader" uid="uid://rr76g78o83ec" path="res://Shader/VertHori.gdshader" id="1_han4b"]
+[ext_resource type="AudioStream" uid="uid://8bhlukilyvad" path="res://Sounds/ostc1.wav" id="2_lc6ns"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lc6ns"]
 render_priority = 0
@@ -22,9 +23,10 @@ size = Vector3(2, 1.5, 1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_imgdq"]
 size = Vector3(2, 2.4, 0.3)
 
-[node name="WallDoorHold" type="WallDoorHold" unique_id=2081128136 node_paths=PackedStringArray("door_open", "static_door")]
+[node name="WallDoorHold" type="WallDoorHold" unique_id=2081128136 node_paths=PackedStringArray("door_open", "static_door", "on_sound")]
 door_open = NodePath("Wall/DoorHold")
 static_door = NodePath("Wall/DoorHold/StaticBody3D")
+on_sound = NodePath("Wall/DoorHold/Area3D/AudioStreamPlayer3D")
 
 [node name="Wall" type="CSGMesh3D" parent="." unique_id=1206016780]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.205439, 0)
@@ -40,6 +42,9 @@ mesh = SubResource("BoxMesh_cw2ci")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Wall/DoorHold/Area3D" unique_id=1247669993]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4463457, 0)
 shape = SubResource("BoxShape3D_dd6xq")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Wall/DoorHold/Area3D" unique_id=657957530]
+stream = ExtResource("2_lc6ns")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Wall/DoorHold" unique_id=814473229]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)

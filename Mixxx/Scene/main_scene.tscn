@@ -54,8 +54,7 @@ base_mesh = NodePath("BaseMesh")
 godot_toon = NodePath("GodotToon")
 rust_toon = NodePath("RustToon")
 podium_mix = NodePath("PodiumMix")
-collected = 2
-how2 = NodePath("Label")
+how2 = NodePath("How2Label")
 scene_gdt = ExtResource("1_c1vcm")
 scene_gdr = ExtResource("2_n7l00")
 timer_yeah = NodePath("YeahTimer")
@@ -88,7 +87,7 @@ mesh = SubResource("BoxMesh_j4qrl")
 [node name="Player" parent="." unique_id=2068331013 groups=["player"] instance=ExtResource("1_j4qrl")]
 
 [node name="Skeleton3D" parent="Player/Nhook_Mixamo/Armature" parent_id_path=PackedInt32Array(2068331013, 294982209, 708592899) index="0" unique_id=613990072]
-bones/3/scale = Vector3(1.0074576, 1.0074576, 1.0074576)
+bones/3/scale = Vector3(1.008432, 1.008432, 1.008432)
 
 [node name="RustToon" parent="." unique_id=1441850480 groups=["crab_rust_toon"] instance=ExtResource("4_4kvl3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.377083, 0.5, -36.996372)
@@ -99,7 +98,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.44113, 1, -12.878147)
 [node name="BaseMesh" parent="." unique_id=465993362 groups=["base_mesh"] instance=ExtResource("5_lttqn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.907356, 0.5, -35.16896)
 
-[node name="PodiumMix" parent="." unique_id=1686565406 instance=ExtResource("6_i64o6")]
+[node name="PodiumMix" parent="." unique_id=1686565406 node_paths=PackedStringArray("main_scene") instance=ExtResource("6_i64o6")]
+main_scene = NodePath("..")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1034350745]
 anchors_preset = 7
@@ -125,7 +125,7 @@ texture = ExtResource("8_0xtjt")
 layout_mode = 2
 texture = ExtResource("6_k2rys")
 
-[node name="Label" type="Label" parent="." unique_id=238994392]
+[node name="How2Label" type="Label" parent="." unique_id=238994392]
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
@@ -133,7 +133,11 @@ offset_left = -270.5
 offset_right = 270.5
 offset_bottom = 285.0
 grow_horizontal = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
 theme_override_font_sizes/font_size = 50
+horizontal_alignment = 1
+vertical_alignment = 1
 autowrap_mode = 2
 
 [node name="RestartButton" type="Button" parent="." unique_id=1397947717]
@@ -241,3 +245,4 @@ text = "Close"
 [editable path="GodotToon/GodotToon2"]
 [editable path="BaseMesh"]
 [editable path="BaseMesh/BaseBody"]
+[editable path="PodiumMix"]

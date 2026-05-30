@@ -4,6 +4,7 @@
 [ext_resource type="Shader" uid="uid://bhahs41liecft" path="res://Shader/outline.gdshader" id="2_lna13"]
 [ext_resource type="Texture2D" uid="uid://ciuiqxw121g42" path="res://Models/Textures/TT_Color-min.png" id="2_t1x5e"]
 [ext_resource type="Shader" uid="uid://x586rwkuiaki" path="res://Shader/NhookShader.gdshader" id="3_vjj3t"]
+[ext_resource type="AudioStream" uid="uid://kvbdyhakbl4a" path="res://Sounds/collected_crab_rust_toon.wav" id="5_vjj3t"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_lna13"]
 size = Vector3(1.1434326, 0.5004883, 1)
@@ -12,7 +13,7 @@ size = Vector3(1.1434326, 0.5004883, 1)
 render_priority = 0
 shader = ExtResource("2_lna13")
 shader_parameter/albedo = Color(0, 0, 0, 1)
-shader_parameter/grow = 0.010000760474998316
+shader_parameter/grow = 0.01000076047499831
 shader_parameter/albedo_texture_size = Vector2i(0, 0)
 shader_parameter/point_size = 0.0
 shader_parameter/roughness = 0.0
@@ -36,7 +37,9 @@ shader_parameter/metallic = 0.0
 shader_parameter/shadow_steps = 3.0
 shader_parameter/light_wrap = 0.1
 
-[node name="CrabRustToon" type="FloatingItem" unique_id=465993362]
+[node name="CrabRustToon" type="FloatingItem" unique_id=465993362 node_paths=PackedStringArray("on_sound", "timer_sound")]
+on_sound = NodePath("AudioStreamPlayer3D")
+timer_sound = NodePath("SoundTimer")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1978558497]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0025024414, 0.24841404, 0)
@@ -47,6 +50,12 @@ shape = SubResource("BoxShape3D_lna13")
 [node name="Rust_Toon" parent="RustToon" index="0" unique_id=391964137]
 surface_material_override/0 = SubResource("ShaderMaterial_dwaqc")
 
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=1586073945]
+stream = ExtResource("5_vjj3t")
+
+[node name="SoundTimer" type="Timer" parent="." unique_id=1700690158]
+
 [connection signal="body_entered" from="." to="." method="on_body_entered"]
+[connection signal="timeout" from="SoundTimer" to="." method="on_timer_timeout"]
 
 [editable path="RustToon"]

@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://chvd4w6burwgq"]
 
 [ext_resource type="Shader" uid="uid://rr76g78o83ec" path="res://Shader/VertHori.gdshader" id="1_xd5ml"]
+[ext_resource type="AudioStream" uid="uid://xhvvsyyyvknx" path="res://Sounds/ostc3_1.wav" id="2_tejww"]
+[ext_resource type="AudioStream" uid="uid://bgvvbtg8u7yb8" path="res://Sounds/ostc3_2.wav" id="3_yfb84"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_iu06n"]
 render_priority = 0
@@ -20,8 +22,10 @@ data = PackedVector3Array(-1, 1.1999999, 0.14999999, 1, 1.1999999, 0.14999999, -
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_xd5ml"]
 
-[node name="Platform_Left_Right" type="PlatformLeftRight" unique_id=1992298782 node_paths=PackedStringArray("platform")]
+[node name="Platform_Left_Right" type="PlatformLeftRight" unique_id=1992298782 node_paths=PackedStringArray("platform", "left_sound", "right_sound")]
 platform = NodePath("MeshInstance3D")
+left_sound = NodePath("LeftArea/LeftSound")
+right_sound = NodePath("RightArea/RightSound")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=176553407]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
@@ -38,11 +42,17 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.6)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="LeftArea" unique_id=256959172]
 shape = SubResource("BoxShape3D_momod")
 
+[node name="LeftSound" type="AudioStreamPlayer3D" parent="LeftArea" unique_id=321571146]
+stream = ExtResource("2_tejww")
+
 [node name="RightArea" type="Area3D" parent="." unique_id=1185647838]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RightArea" unique_id=253094972]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, 0)
 shape = SubResource("BoxShape3D_xd5ml")
+
+[node name="RightSound" type="AudioStreamPlayer3D" parent="RightArea" unique_id=278280710]
+stream = ExtResource("3_yfb84")
 
 [node name="RughtBack" type="Area3D" parent="." unique_id=639680861]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.6)
