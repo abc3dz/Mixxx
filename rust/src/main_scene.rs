@@ -1,7 +1,7 @@
 use crate::scene_gdr;
 use crate::scene_gdt;
 
-use godot::classes::GpuParticles3D;
+use godot::classes::{GpuParticles3D, InputEvent, Button};
 use godot::classes::{CharacterBody3D, Area3D, INode3D, Label, Node3D, Texture2D, TextureRect, AnimationTree, Timer, VBoxContainer};
 use godot::prelude::*;
 
@@ -17,7 +17,7 @@ pub struct MainScene {
     #[export]
     rust_toon: OnEditor<Gd<Area3D>>,
     #[export]
-    podium_mix: OnEditor<Gd<Area3D>>,
+    pub podium_mix: OnEditor<Gd<Area3D>>,
     #[init(node = "HBoxContainer/BaseMeshTR")]
     base_mesh_tr: OnReady<Gd<TextureRect>>,
     #[init(node = "HBoxContainer/GodotToonTR")]
@@ -42,6 +42,8 @@ pub struct MainScene {
     ending: OnEditor<Gd<VBoxContainer>>,
     #[export]
     show_ending_label: OnEditor<Gd<Label>>,
+    #[export]
+    close_button: OnEditor<Gd<Button>>,
     elapsed_time: f64,
     is_running: bool,
     base: Base<Node3D>,
@@ -54,6 +56,13 @@ impl INode3D for MainScene {
         //self.player.set_position(Vector3 { x: -10.0, y: 0.0, z: -21.0 });
         self.is_running = true;
         self.elapsed_time = 0.0;    
+    }
+    fn unhandled_input(&mut self, event: Gd<InputEvent>) {
+        if event.is_action_pressed("ui_cancel") {
+            self.base().get_tree().set_pause(true);
+            self.ending.set_visible(true);
+            self.close_button.grab_focus();
+        }
     }
     fn process(&mut self, delta: f64) {
         if !self.is_running {
@@ -127,7 +136,7 @@ impl MainScene {
     fn on_podium2mix_body_entered(&mut self, body: Gd<Node3D>) {
         if body.is_in_group("player") && self.collected >= 3 {
             self.how2.set_text("Congratulations!");
-            
+            self.close_button.grab_focus();
             let mut sc_gdr = self.scene_gdr.instantiate_as::<scene_gdr::SceneGDR>();
             sc_gdr.set_position(self.podium_mix.get_position() + Vector3 { x: 1.0, y: 0.0, z: 0.0 });
             self.base_mut().add_child(&sc_gdr);
@@ -146,6 +155,7 @@ impl MainScene {
                 &format!("{:.2} Seconds", self.elapsed_time)
             );
             self.is_running = false;
+            self.close_button.set_text("Exit!");
         }
         if body.is_in_group("player") && self.collected < 3 {
             self.how2.set_text("Collect 3 items before entering the podium!");
@@ -175,10 +185,17 @@ impl MainScene {
     }
     #[func]
     fn on_close_button_pressed(&mut self) {
-        self.ending.set_visible(false);
+        if self.collected_podium{            
+            self.base_mut().get_tree().quit();
+        }else{
+            self.ending.set_visible(false);
+            self.base().get_tree().set_pause(false);
+        }
     }
     #[func]
     fn on_restart_button_pressed(&mut self) {
+        self.base().get_tree().set_pause(false);
         self.base_mut().get_tree().reload_current_scene();
+        
     }
 }

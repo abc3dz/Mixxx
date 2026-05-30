@@ -20,7 +20,8 @@ impl ICamera3D for CameraFollow {
     fn process(&mut self, delta: f64) {
         
         if self.main_scene.bind().collected_podium {
-            self.base_mut().set_position(Vector3 { x: -11.0, y: (3.0), z: (-16.5) });
+            let pos = self.main_scene.bind().podium_mix.get_position();
+            self.base_mut().set_position(pos + Vector3 { x: 0.0, y: 4.0, z: 4.0 });
             return;
         }
 
