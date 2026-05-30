@@ -558,6 +558,7 @@ libraries/ = SubResource("AnimationLibrary_dkcpu")
 
 [node name="GdtParticles3D" type="GPUParticles3D" parent="." unique_id=1216392268]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05388534, 0, 0.0049511194)
+visible = false
 speed_scale = 2.0
 process_material = SubResource("ParticleProcessMaterial_dkcpu")
 draw_pass_1 = SubResource("QuadMesh_brsy1")

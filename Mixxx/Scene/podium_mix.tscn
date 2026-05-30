@@ -65,6 +65,7 @@ draw_pass_1 = SubResource("QuadMesh_ioirf")
 
 [node name="NotSStSound" type="AudioStreamPlayer3D" parent="." unique_id=678965760]
 stream = ExtResource("2_yoxk0")
+volume_db = -10.0
 
 [node name="CongratsSound" type="AudioStreamPlayer3D" parent="." unique_id=489944056]
 stream = ExtResource("3_do64d")

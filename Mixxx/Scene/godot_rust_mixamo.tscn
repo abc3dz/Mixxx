@@ -670,6 +670,7 @@ libraries/ = SubResource("AnimationLibrary_kl6ha")
 
 [node name="GRParticles" type="GPUParticles3D" parent="." unique_id=1173491135]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05388534, 0, 0.0049511194)
+visible = false
 speed_scale = 2.0
 process_material = SubResource("ParticleProcessMaterial_kl6ha")
 draw_pass_1 = SubResource("QuadMesh_pn1mx")

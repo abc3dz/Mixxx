@@ -104,6 +104,7 @@ radial_segments = 16
 
 [node name="Player" type="Player" unique_id=2068331013]
 jump_impulse = 6.0
+process_mode = 1
 floor_max_angle = 0.2617994
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=408861621]
@@ -126,7 +127,7 @@ parameters/collect_blend/blend_amount = 0.0
 [node name="Nhook_Mixamo" parent="." unique_id=294982209 instance=ExtResource("4_58ae2")]
 
 [node name="Skeleton3D" parent="Nhook_Mixamo/Armature" parent_id_path=PackedInt32Array(294982209, 708592899) index="0" unique_id=613990072]
-bones/3/scale = Vector3(1.0011706, 1.0011706, 1.0011706)
+bones/3/scale = Vector3(1.0081502, 1.0081502, 1.0081502)
 bones/8/rotation = Quaternion(0.5383484, 0.008032187, -0.02668584, 0.84226155)
 bones/8/scale = Vector3(0.9999999, 0.99999994, 0.9999999)
 bones/9/rotation = Quaternion(-0.038360484, -0.0005095902, 0.013272945, 0.9991757)
