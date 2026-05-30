@@ -7,4 +7,4 @@ reloadable = true
 linux.debug.x86_64 = "res://../rust/target/debug/librust.so"
 linux.release.x86_64 = "res://../rust/target/release/librust.so"
 windows.debug.x86_64 = "res://../rust/target/debug/librust.dll"
-windows.release.x86_64 = "res://../rust/target/release/librust.dll"
+windows.release.x86_64 = "res://../rust/target/x86_64-pc-windows-gnu/release/rust.dll"
