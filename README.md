@@ -11,4 +11,4 @@ Devlog#1: https://youtu.be/KZWHssDPAsA
 
 Devlog#2: https://youtu.be/2OcVecKcHZc
 
-Releasing on: https://abc3dz.itch.io/mixxx
+Now available on itch.io: https://abc3dz.itch.io/mixxx
