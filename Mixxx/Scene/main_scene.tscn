@@ -35,17 +35,6 @@ size = Vector3(40, 1, 41)
 [sub_resource type="BoxShape3D" id="BoxShape3D_j1xvy"]
 size = Vector3(60, 1, 60)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n7l00"]
-content_margin_left = 4.0
-content_margin_top = 4.0
-content_margin_right = 4.0
-content_margin_bottom = 4.0
-bg_color = Color(0.060457885, 0.49352366, 0.25712585, 0.6)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q6wtm"]
 content_margin_left = 4.0
 content_margin_top = 4.0
@@ -58,7 +47,18 @@ corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 corner_detail = 5
 
-[node name="MainScene" type="MainScene" unique_id=910066661 node_paths=PackedStringArray("player", "base_mesh", "godot_toon", "rust_toon", "podium_mix", "how2", "timer_yeah", "fall_area", "ending", "show_ending_label", "close_button")]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n7l00"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.060457885, 0.49352366, 0.25712585, 0.6)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="MainScene" type="MainScene" unique_id=910066661 node_paths=PackedStringArray("player", "base_mesh", "godot_toon", "rust_toon", "podium_mix", "how2", "timer_yeah", "fall_area", "ending", "show_ending_label", "close_button", "restart_button")]
 player = NodePath("Player")
 base_mesh = NodePath("BaseMesh")
 godot_toon = NodePath("GodotToon")
@@ -72,7 +72,8 @@ fall_area = NodePath("FallArea")
 ending = NodePath("EndingVBox")
 show_ending_label = NodePath("EndingVBox/HBoxContainer2/Time2Play")
 close_button = NodePath("EndingVBox/CloseButton")
-process_mode = 1
+restart_button = NodePath("EndingVBox/RestartButton")
+process_mode = 3
 
 [node name="Camera3D" type="CameraFollow" parent="." unique_id=325016109 node_paths=PackedStringArray("main_scene")]
 target_path = NodePath("../Player")
@@ -99,7 +100,7 @@ mesh = SubResource("BoxMesh_j4qrl")
 [node name="Player" parent="." unique_id=2068331013 groups=["player"] instance=ExtResource("1_j4qrl")]
 
 [node name="Skeleton3D" parent="Player/Nhook_Mixamo/Armature" parent_id_path=PackedInt32Array(2068331013, 294982209, 708592899) index="0" unique_id=613990072]
-bones/3/scale = Vector3(1.0087981, 1.0087981, 1.0087981)
+bones/3/scale = Vector3(1.0054328, 1.0054328, 1.0054328)
 
 [node name="RustToon" parent="." unique_id=1441850480 groups=["crab_rust_toon"] instance=ExtResource("4_4kvl3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.377083, 0.5, -36.996372)
@@ -218,19 +219,19 @@ theme_override_constants/outline_size = 5
 theme_override_font_sizes/font_size = 25
 text = "00"
 
-[node name="RestartButton" type="Button" parent="EndingVBox" unique_id=1397947717]
-process_mode = 3
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-theme_override_styles/normal = SubResource("StyleBoxFlat_n7l00")
-text = "Restart"
-
 [node name="CloseButton" type="Button" parent="EndingVBox" unique_id=1437978735]
 process_mode = 3
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 theme_override_styles/normal = SubResource("StyleBoxFlat_q6wtm")
 text = "Close"
+
+[node name="RestartButton" type="Button" parent="EndingVBox" unique_id=1397947717]
+process_mode = 3
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_n7l00")
+text = "Restart"
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=433746306]
 stream = ExtResource("17_n7l00")
@@ -245,8 +246,8 @@ parameters/looping = true
 [connection signal="body_exited" from="PodiumMix" to="." method="on_podium2mix_body_exited"]
 [connection signal="timeout" from="YeahTimer" to="." method="on_timer_timeout"]
 [connection signal="body_entered" from="FallArea" to="." method="on_fall_area_body_entered"]
-[connection signal="pressed" from="EndingVBox/RestartButton" to="." method="on_restart_button_pressed"]
 [connection signal="pressed" from="EndingVBox/CloseButton" to="." method="on_close_button_pressed"]
+[connection signal="pressed" from="EndingVBox/RestartButton" to="." method="on_restart_button_pressed"]
 
 [editable path="Player"]
 [editable path="Player/Nhook_Mixamo"]

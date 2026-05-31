@@ -40,6 +40,7 @@ shader_parameter/light_wrap = 0.1
 [node name="GodotToon" type="FloatingItem" unique_id=2122828118 node_paths=PackedStringArray("on_sound", "timer_sound")]
 on_sound = NodePath("AudioStreamPlayer3D")
 timer_sound = NodePath("SoundTimer")
+process_mode = 1
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1978558497]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.6293945e-05, -0.032409668, -0.0418396)

@@ -40,6 +40,7 @@ shader_parameter/light_wrap = 0.1
 [node name="CrabRustToon" type="FloatingItem" unique_id=465993362 node_paths=PackedStringArray("on_sound", "timer_sound")]
 on_sound = NodePath("AudioStreamPlayer3D")
 timer_sound = NodePath("SoundTimer")
+process_mode = 1
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1978558497]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0025024414, 0.24841404, 0)
