@@ -35,7 +35,7 @@ impl ICharacterBody3D for Player {
         }
 
         // Jump
-        if Input::singleton().is_action_just_pressed("ui_select")
+        if Input::singleton().is_action_just_pressed("jump")
             && base.is_on_floor()
         {
             velocity.y = jump_impulse;

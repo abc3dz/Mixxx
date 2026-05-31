@@ -1,7 +1,7 @@
 use crate::scene_gdr;
 use crate::scene_gdt;
 
-use godot::classes::{GpuParticles3D, InputEvent, Button};
+use godot::classes::{GpuParticles3D, InputEvent, Button,};
 use godot::classes::{CharacterBody3D, Area3D, INode3D, Label, Node3D, Texture2D, TextureRect, AnimationTree, Timer, VBoxContainer};
 use godot::prelude::*;
 
@@ -44,6 +44,8 @@ pub struct MainScene {
     show_ending_label: OnEditor<Gd<Label>>,
     #[export]
     close_button: OnEditor<Gd<Button>>,
+    #[export]
+    restart_button: OnEditor<Gd<Button>>,
     elapsed_time: f64,
     is_running: bool,
     base: Base<Node3D>,
@@ -54,18 +56,19 @@ impl INode3D for MainScene {
     fn ready(&mut self) {
         self.how2.set_text("");
         //self.player.set_position(Vector3 { x: -10.0, y: 0.0, z: -21.0 });
-        self.is_running = true;
-        self.elapsed_time = 0.0;    
+        self.elapsed_time = 0.0;
     }
     fn unhandled_input(&mut self, event: Gd<InputEvent>) {
-        if event.is_action_pressed("ui_cancel") {
-            self.base().get_tree().set_pause(true);
-            self.ending.set_visible(true);
+        //godot_print!("Unhandled Input: {}", event);
+        if event.is_action_pressed("fuyack") {
+            let paused = self.base().get_tree().is_paused();
+            self.base().get_tree().set_pause(!paused);
+            self.ending.set_visible(!paused);
             self.close_button.grab_focus();
         }
     }
     fn process(&mut self, delta: f64) {
-        if !self.is_running {
+        if self.base().get_tree().is_paused() {
             return;
         }
 
