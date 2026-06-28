@@ -6,5 +6,3 @@ This game is very simple: the player walks around collecting 3 items and then re
 
 Video devlog Playlist
 https://www.youtube.com/playlist?list=PL_UTOhNKGbpMEFw7lj4YfnswwLAyQFjfm
-
-Now available on itch.io: https://abc3dz.itch.io/mixxx
